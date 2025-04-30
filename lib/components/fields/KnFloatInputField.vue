@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VTextField } from 'vuetify/components'
+import { VNumberInput } from 'vuetify/components'
 
 import type { KnFormStringField } from '@/types.ts'
 import { useKnFormField } from '@/utils/fieldUtils.ts'
@@ -8,7 +8,7 @@ import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 const {fieldProps} = defineProps<{
   fieldProps: KnFormStringField
 }>()
-const _model = defineModel<string>()
+const _model = defineModel<number>()
 const {model, inputProps, label, inputSlots} = useKnFormField(
     _model,
     fieldProps,
@@ -18,7 +18,11 @@ const {model, inputProps, label, inputSlots} = useKnFormField(
 </script>
 
 <template>
-  <v-text-field v-model="model" v-bind="inputProps as any" :label="label">
+  <v-number-input
+      v-model="model" v-bind="inputProps as any"
+      :label="label" :precision="null"
+      control-variant="hidden"
+  >
     <template
         v-for="[slotName, s] in inputSlots"
         :key="slotName" #[slotName]
@@ -28,7 +32,7 @@ const {model, inputProps, label, inputSlots} = useKnFormField(
           v-model="model"
       />
     </template>
-  </v-text-field>
+  </v-number-input>
 </template>
 
 <style scoped>

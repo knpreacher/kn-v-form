@@ -1,9 +1,10 @@
 <script setup lang="ts">
 
-import { VForm } from "vuetify/components";
+import { VForm, VExpansionPanels } from 'vuetify/components'
 
-import type { KnFormData } from "@/types.ts";
-import KnFormFieldWrapper from "@/components/KnFormFieldWrapper.vue";
+import type { KnFormData } from '@/types.ts'
+// import KnFormFieldWrapper from '@/components/KnFormFieldWrapper.vue'
+import KnFormFieldGroup from '@/components/KnFormFieldGroup.vue'
 
 defineProps<{
   schema: KnFormData
@@ -14,12 +15,14 @@ const model = defineModel<Record<string, any>>({required: true})
 
 <template>
   <v-form>
-    <kn-form-field-wrapper
-        v-for="field in schema.fields"
-        :key="`field__${field.name}`"
-        v-model="model[field.name]"
-        :field-props="field"
-    />
+    <v-expansion-panels>
+      <kn-form-field-group
+          v-for="group in schema.groups"
+          :fields="group.fields"
+          :group-data="group"
+          v-model="model"
+      />
+    </v-expansion-panels>
   </v-form>
 </template>
 

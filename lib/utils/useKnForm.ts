@@ -1,27 +1,53 @@
-import type { KnFormData, KnFormStringField } from "../types.ts";
+import type { KnFormData, KnFormFloatField, KnFormIntField, KnFormStringField } from '../types.ts'
 
 function useKnForm(
-  fields: KnFormData['fields'],
+  groups: KnFormData['groups'],
   options?: Omit<KnFormData, 'fields'>
 ): KnFormData {
   return {
     ...options,
-    fields,
+    groups
   }
 }
 
+type FieldOptions<T> = Omit<T, 'name' | 'type'>
+
 function useKnStringField(
   key: string,
-  options?: Omit<KnFormStringField, 'name' | 'type'>
+  options?: FieldOptions<KnFormStringField>
 ): KnFormStringField {
   return {
     ...(options ?? {}),
     name: key,
-    type: 'string',
+    type: 'string'
   } as KnFormStringField
+}
+
+function useKnIntField(
+  key: string,
+  options?: FieldOptions<KnFormIntField>
+): KnFormIntField {
+  return {
+    ...(options ?? {}),
+    name: key,
+    type: 'int'
+  } as KnFormIntField
+}
+
+function useKnFloatField(
+  key: string,
+  options?: FieldOptions<KnFormFloatField>
+): KnFormFloatField {
+  return {
+    ...(options ?? {}),
+    name: key,
+    type: 'float'
+  } as KnFormFloatField
 }
 
 export const kn = {
   form: useKnForm,
-  string: useKnStringField
+  string: useKnStringField,
+  int: useKnIntField,
+  float: useKnFloatField
 }

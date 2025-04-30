@@ -1,8 +1,8 @@
 <script setup lang="ts" generic="DataType = any">
 
-import type { FieldDataType, KnFormAnyField } from "@/types.ts";
+import type { FieldDataType, KnFormAnyField } from '@/types.ts'
 
-import * as fields from "@/components/fields";
+import * as fields from '@/components/fields'
 
 const {fieldProps} = defineProps<{
   fieldProps: KnFormAnyField
@@ -10,7 +10,9 @@ const {fieldProps} = defineProps<{
 const model = defineModel<DataType>({required: true})
 
 const componentMap: Partial<Record<FieldDataType, any>> = {
-  string: fields.KnStringInputField
+  string: fields.KnStringInputField,
+  int: fields.KnIntInputField,
+  float: fields.KnFloatInputField
 }
 
 const bindComponent = componentMap[fieldProps.type]
