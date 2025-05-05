@@ -21,7 +21,7 @@ export function useKnFormField<
   slotNames: (keyof Required<Required<PropsType>['slots']>)[]
 ) {
 // >({model, fieldProps}: UseKnFormFieldOptions<ValueType, PropsType>) {
-  const label = computed(() => fieldProps.label)
+  const label = computed(() => fieldProps.outLabel ? undefined : fieldProps.label)
   const inputSlotNames = defineFieldSlots(slotNames)
   // @ts-ignore
   const inputSlots = inputSlotNames.map(name => [name, fieldProps.slots?.[name]]).filter(s=>!!s[1])

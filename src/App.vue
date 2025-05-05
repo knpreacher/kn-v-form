@@ -3,11 +3,28 @@
 import { KnFormLayout, kn } from './../lib'
 import { computed, ref } from 'vue'
 import { VCode, VDivider, VApp, VContainer } from 'vuetify/components'
+import TestCustomInput from './TestCustomInput.vue'
 
 
 const form = kn.form([
   {
     label: 'PERSON',
+    gridSize: {
+      cols: 12,
+      sm: 12,
+      md: 6,
+      lg: 4
+    },
+    rowOptions: {
+      align: 'end'
+    },
+    fieldDefaults: {
+      outLabel: true,
+      inputProps: {
+        hideDetails: 'auto'
+      }
+    },
+    // expandable: true,
     fields: [
       kn.string('name', {
         label: 'NAME',
@@ -16,8 +33,19 @@ const form = kn.form([
           'append-inner': {
             text: 'kg'
           },
-          header: {
-            text: 'HEADER'
+          header_side: {
+            text: 'kg',
+            cls: 'text-red'
+          }
+        }
+      }),
+      kn.custom('age_custom', TestCustomInput, {
+        label: 'Slider age',
+        componentProps: {
+          sliderProps: {
+            min: 0,
+            max: 100,
+            step: 1
           }
         }
       }),
@@ -28,13 +56,53 @@ const form = kn.form([
         label: 'WEIGHT'
       }),
       kn.float('weight2', {
-        label: 'WEIGHT2'
-      })
+        label: 'WEIGHT2',
+        showIf(data) {
+          return data?.age > 18 || false
+        }
+      }),
+      kn.select('select', [
+        {
+          value: 4,
+          label: '4o'
+        },
+        {
+          value: 5,
+          label: '5o',
+          disabled: true
+        }
+      ], {
+        label: 'SELECT'
+      }),
+      kn.selectMany('selectMany', [
+        {
+          value: 4,
+          label: '4o'
+        },
+        {
+          value: 5,
+          label: '5o'
+        },
+        {
+          value: 6,
+          label: '6o'
+        }
+      ], {
+        label: 'SELECT MANY'
+      }),
+      kn.computed('computed',
+          (allData) => allData?.age + 10,
+          {
+            emitToModel: true
+          }
+      )
     ]
   }
 ])
 
-const model = ref({})
+const model = ref({
+  age: 10
+})
 const displayModel = computed(() => JSON.stringify(model.value, null, 2))
 </script>
 

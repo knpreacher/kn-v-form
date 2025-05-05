@@ -1,0 +1,16 @@
+.kn-form-field__header {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 1px;
+}
+
+.kn-form-field__header .kn-form-field__label {
+    opacity: 0.8;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.kn-form-field-group {
+    width: 100%;
+}

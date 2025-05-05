@@ -33,6 +33,7 @@ export default defineConfig({
       name: "KnVFormLib",
       // the name of the output files when the build is run
       fileName: "index",
+      cssFileName: "index",
     },
     rollupOptions: {
       // Make sure to exclude Vue from the bundle

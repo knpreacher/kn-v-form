@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { KnFormAnyField, KnFormGroup } from '@/types.ts'
 
-import { VExpansionPanel, VRow, VCol } from 'vuetify/components'
-import KnFormFieldWrapper from '@/components/KnFormFieldWrapper.vue'
+import { VExpansionPanel } from 'vuetify/components'
+import KnFormFieldGrid from '@/components/KnFormFieldGrid.vue'
 
 const {fields, groupData} = defineProps<{
   groupData: KnFormGroup,
@@ -10,23 +10,27 @@ const {fields, groupData} = defineProps<{
 }>()
 
 const model = defineModel<Record<string, any>>({required: true})
+
 </script>
 
 <template>
-  <v-expansion-panel static :title="groupData.label">
+  <v-expansion-panel static :title="groupData.label" v-if="groupData.expandable">
     <template #text>
-      <v-row>
-        <v-col v-for="field in fields" :key="field.name">
-          <kn-form-field-wrapper
-              :field-props="field"
-              v-model="model[field.name]"
-          />
-        </v-col>
-      </v-row>
+      <kn-form-field-grid
+          :fields="fields"
+          :group-data="groupData"
+          v-model="model"
+      />
     </template>
   </v-expansion-panel>
+  <div v-else class="kn-form-field-group">
+    <kn-form-field-grid
+        :fields="fields"
+        :group-data="groupData"
+        v-model="model"
+    />
+  </div>
 </template>
 
 <style scoped>
-
 </style>
