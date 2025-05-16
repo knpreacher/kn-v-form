@@ -1,4 +1,4 @@
-import type { VTextField, VNumberInput, VIcon, VSwitch, VRow, VSelect, VInput } from 'vuetify/components'
+import type { VTextField, VNumberInput, VIcon, VSwitch, VRow, VSelect, VInput, VDialog } from 'vuetify/components'
 
 export type FieldDataType =
   | 'computed'
@@ -223,4 +223,22 @@ export interface KnFormData {
   groupDefaults?: Partial<KnFormGroup>,
 
   disableHiddenSubmit?: boolean
+}
+
+// Dialog
+export type DialogResolveFn<Result = any> = (result?: Result) => void
+
+export interface KnCommonDialogData {
+  title?: string
+  dialogProps?: Partial<VDialog['$props']>,
+  resolve: DialogResolveFn
+}
+
+export interface KnCustomDialogData extends KnCommonDialogData {
+  component: any,
+  componentProps?: Record<string, any>
+}
+
+export interface KnSelectDialogData extends KnCommonDialogData {
+  options: DefaultSelectionOption[]
 }

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 
-import { KnFormLayout, kn } from './../lib'
+import { KnFormLayout, kn, useKnDialog } from './../lib'
 import { computed, ref } from 'vue'
 import TestCustomInput from './TestCustomInput.vue'
+import { VApp, VContainer, VDivider, VCode, VBtn } from 'vuetify/components'
 
 const form = kn.form([
   {
@@ -106,6 +107,30 @@ const model = ref({
   age: 10
 })
 const displayModel = computed(() => JSON.stringify(model.value, null, 2))
+
+const {select} = useKnDialog()
+
+function onOpenDialogBtnClick() {
+  select({
+    title: 'Select Dialog',
+    options: [
+      {
+        value: 1,
+        label: '1o'
+      },
+      {
+        value: 2,
+        label: '2o'
+      },
+      {
+        value: 3,
+        label: '3o'
+      }
+    ]
+  }).then((value) => {
+    console.log('resolved', value)
+  })
+}
 </script>
 
 <template>
@@ -120,6 +145,9 @@ const displayModel = computed(() => JSON.stringify(model.value, null, 2))
       <v-divider/>
       <h3>Form</h3>
       <kn-form-layout :schema="form" v-model="model"/>
+      <v-divider/>
+      <h3>Dialog</h3>
+      <v-btn @click="onOpenDialogBtnClick">Open Dialog</v-btn>
     </v-container>
   </v-app>
 </template>

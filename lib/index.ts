@@ -6,9 +6,9 @@ import * as jsUtils from './utils/jsUtils'
 
 export * from './types'
 import './index.css'
+import { dialogPlugin, useKnDialog } from '@/dialogPlugin'
 
 const {form, int, custom, string, float, group, select, selectMany, password, computed} = kn
-
 export {
   KnFormLayout,
   SlotRenderer,
@@ -16,12 +16,16 @@ export {
   kn,
   jsUtils,
 
+  dialogPlugin,
+  useKnDialog,
+
   form,
+  group,
+
   int,
   custom,
   string,
   float,
-  group,
   select,
   selectMany,
   password,
