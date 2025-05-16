@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
 import { VForm, VExpansionPanels } from 'vuetify/components'
+import type { SubmitEventPromise } from 'vuetify/framework'
 
 import type { KnFormData, KnFormFieldGroupData } from '@/types.ts'
-// import KnFormFieldWrapper from '@/components/KnFormFieldWrapper.vue'
 import KnFormFieldGroup from '@/components/KnFormFieldGroup.vue'
 import { computed } from 'vue'
 import { deepJoinObjects } from '@/utils/jsUtils.ts'
@@ -14,17 +14,31 @@ const {schema} = defineProps<{
 
 const model = defineModel<Record<string, any>>({required: true})
 
+const emit = defineEmits<{
+  onSubmit: [ value: SubmitEventPromise ],
+  onSubmitValidated: [],
+}>()
+
 const displayGroups = computed(
     () => schema.groups.filter(
-        g=>g.showIf?.(model.value) ?? true
+        g => g.showIf?.(model.value) ?? true
     ).map(
-        g=>deepJoinObjects(g, schema.groupDefaults ?? {})
+        g => deepJoinObjects(g, schema.groupDefaults ?? {})
     ) as KnFormFieldGroupData[]
 )
+
+function onFormSubmit(se: SubmitEventPromise) {
+  emit('onSubmit', se)
+  se.then(value => {
+    if (value.valid) {
+      emit('onSubmitValidated')
+    }
+  })
+}
 </script>
 
 <template>
-  <v-form>
+  <v-form @submit.prevent="onFormSubmit">
     <v-expansion-panels>
       <kn-form-field-group
           v-for="group in displayGroups"
@@ -33,6 +47,7 @@ const displayGroups = computed(
           v-model="model"
       />
     </v-expansion-panels>
+    <button type="submit" v-if="!schema.disableHiddenSubmit" style="display: none; position: absolute;"></button>
   </v-form>
 </template>
 

@@ -95,7 +95,11 @@ const form = kn.form([
           {
             emitToModel: true
           }
-      )
+      ),
+      kn.password('password', {
+        label: 'pass',
+        passwordHideIcon: 'lock'
+      })
     ]
   }
 ])

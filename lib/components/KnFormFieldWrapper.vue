@@ -1,27 +1,17 @@
 <script setup lang="ts" generic="DataType = any">
 
-import type { FieldDataType, KnFormAnyField } from '@/types.ts'
+import type { KnFormAnyField } from '@/types.ts'
 
-import * as fields from '@/components/fields'
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 
 import { VSpacer } from 'vuetify/components'
+import { componentMap } from '@/utils/componentTypeMap.ts'
 
 const {fieldProps} = defineProps<{
   fieldProps: KnFormAnyField
 }>()
 const model = defineModel<DataType>({required: true})
 const allData = defineModel('allData')
-
-const componentMap: Partial<Record<FieldDataType, any>> = {
-  computed: fields.KnComputedInputField,
-  custom: fields.KnCustomInputField,
-  string: fields.KnStringInputField,
-  int: fields.KnIntInputField,
-  float: fields.KnFloatInputField,
-  select: fields.KnSelectInputField,
-  select_many: fields.KnSelectManyInputField
-}
 
 const bindComponent = componentMap[fieldProps.type]
 

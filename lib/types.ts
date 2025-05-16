@@ -4,6 +4,7 @@ export type FieldDataType =
   | 'computed'
   | 'custom'
   | 'string'
+  | 'password'
   | 'int'
   | 'float'
   | 'date'
@@ -137,6 +138,17 @@ export interface KnFormStringField extends KnFormAbstractField<
 }
 
 //
+// Password Field
+//
+export interface KnFormPasswordField extends KnFormAbstractField<
+  PreparedInputProps<VTextField>,
+  GetSlots<VTextField>
+> {
+  passwordHideIcon?: string,
+  passwordShowIcon?: string
+}
+
+//
 // Int Field
 //
 
@@ -208,5 +220,7 @@ export interface KnFormFieldGroupData extends KnFormGroup {
 
 export interface KnFormData {
   groups: KnFormFieldGroupData[],
-  groupDefaults?: Partial<KnFormGroup>
+  groupDefaults?: Partial<KnFormGroup>,
+
+  disableHiddenSubmit?: boolean
 }

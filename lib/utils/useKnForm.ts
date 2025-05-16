@@ -1,14 +1,14 @@
 import type {
-  DefaultSelectionOption, KnFormComputedField, KnFormCustomField,
-  KnFormData,
-  KnFormFloatField,
-  KnFormIntField, KnFormSelectField, KnFormSelectManyField,
+  DefaultSelectionOption, KnFormAnyField, KnFormComputedField, KnFormCustomField,
+  KnFormData, KnFormFieldGroupData,
+  KnFormFloatField, KnFormGroup,
+  KnFormIntField, KnFormPasswordField, KnFormSelectField, KnFormSelectManyField,
   KnFormStringField
 } from '../types.ts'
 
-function useKnForm(
+function form(
   groups: KnFormData['groups'],
-  options?: Omit<KnFormData, 'fields'>
+  options?: Omit<KnFormData, 'groups'>
 ): KnFormData {
   return {
     ...options,
@@ -16,9 +16,19 @@ function useKnForm(
   }
 }
 
+function group(
+  fields: KnFormAnyField[],
+  options?: KnFormGroup
+): KnFormFieldGroupData {
+  return {
+    ...options,
+    fields
+  }
+}
+
 type FieldOptions<T> = Omit<T, 'name' | 'type'>
 
-function useKnComputedField<AllData = any>(
+function computed<AllData = any>(
   key: string,
   valueGetter: (allData: AllData) => any,
   options?: FieldOptions<Omit<KnFormComputedField, 'valueGetter'>>
@@ -31,7 +41,7 @@ function useKnComputedField<AllData = any>(
   } as KnFormComputedField
 }
 
-function useKnCustomField(
+function custom(
   key: string,
   component: any,
   options?: FieldOptions<Omit<KnFormCustomField, 'component'>>
@@ -44,7 +54,7 @@ function useKnCustomField(
   } as KnFormCustomField
 }
 
-function useKnStringField(
+function string(
   key: string,
   options?: FieldOptions<KnFormStringField>
 ): KnFormStringField {
@@ -55,7 +65,18 @@ function useKnStringField(
   } as KnFormStringField
 }
 
-function useKnIntField(
+function password(
+  key: string,
+  options?: FieldOptions<KnFormPasswordField>
+): KnFormPasswordField {
+  return {
+    ...(options ?? {}),
+    name: key,
+    type: 'password'
+  } as KnFormPasswordField
+}
+
+function int(
   key: string,
   options?: FieldOptions<KnFormIntField>
 ): KnFormIntField {
@@ -66,7 +87,7 @@ function useKnIntField(
   } as KnFormIntField
 }
 
-function useKnFloatField(
+function float(
   key: string,
   options?: FieldOptions<KnFormFloatField>
 ): KnFormFloatField {
@@ -77,7 +98,7 @@ function useKnFloatField(
   } as KnFormFloatField
 }
 
-function useKnSelectField<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
+function select<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
   key: string,
   items: ItemOption[],
   options?: FieldOptions<Omit<KnFormSelectField<ItemOption>, 'options'>>
@@ -90,7 +111,7 @@ function useKnSelectField<ItemOption extends DefaultSelectionOption = DefaultSel
   } as KnFormSelectField
 }
 
-function useKnSelectManyField<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
+function selectMany<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
   key: string,
   items: ItemOption[],
   options?: FieldOptions<Omit<KnFormSelectManyField<ItemOption>, 'options'>>
@@ -103,14 +124,16 @@ function useKnSelectManyField<ItemOption extends DefaultSelectionOption = Defaul
   } as KnFormSelectManyField
 }
 
-export const kn = {
-  form: useKnForm,
+export {
+  form,
+  group,
 
-  computed: useKnComputedField,
-  custom: useKnCustomField,
-  string: useKnStringField,
-  int: useKnIntField,
-  float: useKnFloatField,
-  select: useKnSelectField,
-  selectMany: useKnSelectManyField
+  computed,
+  custom,
+  string,
+  password,
+  int,
+  float,
+  select,
+  selectMany
 }

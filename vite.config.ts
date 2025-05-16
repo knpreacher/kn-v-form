@@ -4,15 +4,14 @@ import { resolve } from "path";
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import vue from '@vitejs/plugin-vue'
-import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
+import vuetify from "vite-plugin-vuetify";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    vue({
-      template: {transformAssetUrls},
-    }),
-    dts({ insertTypesEntry: true, tsconfigPath: './tsconfig.lib.json' }),
+    vue(),
+    // dts({ insertTypesEntry: true, tsconfigPath: './tsconfig.lib.json' }),
+    dts({ include: './lib', tsconfigPath: './tsconfig.lib.json' }),
     vuetify({
       autoImport: false,
       styles: 'sass',
@@ -27,6 +26,8 @@ export default defineConfig({
   //   include: ["vuetify"],
   // },
   build: {
+    outDir: 'dist',
+    sourcemap: true,
     lib: {
       // src/main.ts is where we have exported our component(s)
       entry: resolve(__dirname, "lib/index.ts"),
@@ -37,7 +38,14 @@ export default defineConfig({
     },
     rollupOptions: {
       // Make sure to exclude Vue from the bundle
-      external: ['vue', 'vuetify'],
+      external: ['vue', 'vuetify', /vuetify\/.+/],
+      output: {
+        exports: 'named',
+        globals: {
+          vue: 'Vue',
+          vuetify: 'Vuetify'
+        }
+      }
     }
   },
   ssr: {
