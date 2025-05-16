@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import type { KnFormAnyField, KnFormGroup } from '@/types.ts'
-
-import { VRow, VCol } from 'vuetify/components'
+import type { KnFormAnyField, KnFormGroup } from '@/types'
+import {VRow, VCol} from 'vuetify/components'
 import KnFormFieldWrapper from '@/components/KnFormFieldWrapper.vue'
-import { getItemGridProps } from '@/utils/gridUtils.ts'
+import { getItemGridProps } from '@/utils/gridUtils'
 import { computed } from 'vue'
-import { deepJoinObjects } from '@/utils/jsUtils.ts'
+import { deepJoinObjects } from '@/utils/jsUtils'
 
 const {fields, groupData} = defineProps<{
   groupData: KnFormGroup,

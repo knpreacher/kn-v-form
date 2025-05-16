@@ -1,5 +1,5 @@
 // import type { VTextField } from 'vuetify/components'
-import type { DefaultSlotNames, HeaderSlotNames } from '@/types.ts'
+import type { DefaultSlotNames, HeaderSlotNames } from '@/types'
 
 // type VuetifySlots = VTextField['$slots']
 

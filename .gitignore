@@ -24,3 +24,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+lib/**/*.js
+lib/**/*.d.ts
+lib/**/*.js.map
+!lib/global.d.ts

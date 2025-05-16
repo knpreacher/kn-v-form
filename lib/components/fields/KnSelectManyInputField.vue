@@ -2,8 +2,8 @@
 
 import { type VListItem, VSelect } from 'vuetify/components'
 
-import type { DefaultSelectionOption, KnFormSelectManyField } from '@/types.ts'
-import { useKnFormField } from '@/utils/fieldUtils.ts'
+import type { DefaultSelectionOption, KnFormSelectManyField } from '@/types'
+import { useKnFormField } from '@/utils/fieldUtils'
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 
 const {fieldProps} = defineProps<{

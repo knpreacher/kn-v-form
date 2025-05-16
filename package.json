@@ -1,6 +1,6 @@
 {
   "name": "kn-v-form",
-  "version": "0.0.12",
+  "version": "0.0.20",
   "type": "module",
   "files": [
     "dist"

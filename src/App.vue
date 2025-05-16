@@ -2,9 +2,7 @@
 
 import { KnFormLayout, kn } from './../lib'
 import { computed, ref } from 'vue'
-import { VCode, VDivider, VApp, VContainer } from 'vuetify/components'
 import TestCustomInput from './TestCustomInput.vue'
-
 
 const form = kn.form([
   {

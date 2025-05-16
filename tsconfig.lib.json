@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-    "composite": true,
     "module": "esnext",
     "target": "esnext",
-    "jsx": "preserve",
     "lib": ["ESNext", "DOM"],
     "useDefineForClassFields": true,
     "moduleResolution": "node",

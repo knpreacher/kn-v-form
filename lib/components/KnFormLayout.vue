@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
-import { VForm, VExpansionPanels } from 'vuetify/components'
 import type { SubmitEventPromise } from 'vuetify/framework'
 
-import type { KnFormData, KnFormFieldGroupData } from '@/types.ts'
+import {VForm, VExpansionPanels} from 'vuetify/components'
+
+import type { KnFormData, KnFormFieldGroupData } from '@/types'
 import KnFormFieldGroup from '@/components/KnFormFieldGroup.vue'
 import { computed } from 'vue'
-import { deepJoinObjects } from '@/utils/jsUtils.ts'
+import { deepJoinObjects } from '@/utils/jsUtils'
 
 const {schema} = defineProps<{
   schema: KnFormData

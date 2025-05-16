@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import type { KnFormAnyField, KnFormGroup } from '@/types.ts'
-
-import { VExpansionPanel } from 'vuetify/components'
+import type { KnFormAnyField, KnFormGroup } from '@/types'
+import {VExpansionPanel} from 'vuetify/components'
 import KnFormFieldGrid from '@/components/KnFormFieldGrid.vue'
 
 const {fields, groupData} = defineProps<{

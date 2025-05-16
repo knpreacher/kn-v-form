@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { KnFieldSlotData, KnFieldSlotDataObject } from '@/types.ts'
+import { VIcon } from 'vuetify/components'
+import type { KnFieldSlotData, KnFieldSlotDataObject } from '@/types'
 import { computed } from 'vue'
-import {VIcon} from 'vuetify/components'
 
 const props = defineProps<{
   slotData?: KnFieldSlotData | string

@@ -4,7 +4,7 @@ import type {
   KnFormFloatField, KnFormGroup,
   KnFormIntField, KnFormPasswordField, KnFormSelectField, KnFormSelectManyField,
   KnFormStringField
-} from '../types.ts'
+} from '@/types'
 
 function form(
   groups: KnFormData['groups'],

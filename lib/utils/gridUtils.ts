@@ -1,4 +1,4 @@
-import type { GridSize, GridSizeObject } from '@/types.ts'
+import type { GridSize, GridSizeObject } from '@/types'
 
 const MAX_CELLS = 12
 

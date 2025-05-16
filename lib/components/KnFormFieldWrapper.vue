@@ -1,11 +1,11 @@
 <script setup lang="ts" generic="DataType = any">
 
-import type { KnFormAnyField } from '@/types.ts'
+import type { KnFormAnyField } from '@/types'
 
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 
 import { VSpacer } from 'vuetify/components'
-import { componentMap } from '@/utils/componentTypeMap.ts'
+import { componentMap } from '@/utils/componentTypeMap'
 
 const {fieldProps} = defineProps<{
   fieldProps: KnFormAnyField

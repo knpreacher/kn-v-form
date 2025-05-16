@@ -1,6 +1,6 @@
 import { KnFormLayout, fields } from './components'
 import SlotRenderer from './components/helpers/SlotRenderer.vue'
-import * as kn from './utils/useKnForm.ts'
+import * as kn from './utils/useKnForm'
 
 import * as jsUtils from './utils/jsUtils'
 

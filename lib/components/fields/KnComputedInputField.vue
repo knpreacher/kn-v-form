@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { VTextField } from 'vuetify/components'
-
-import type { KnFormComputedField } from '@/types.ts'
-import { useKnFormField } from '@/utils/fieldUtils.ts'
+import {VTextField} from 'vuetify/components'
+import type { KnFormComputedField } from '@/types'
+import { useKnFormField } from '@/utils/fieldUtils'
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 import { computed, watch } from 'vue'
 

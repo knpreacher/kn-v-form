@@ -1,4 +1,4 @@
-import type { FieldDataType } from '@/types.ts'
+import type { FieldDataType } from '@/types'
 import * as fields from '@/components/fields'
 export const componentMap = Object.freeze<Partial<Record<FieldDataType, any>>>({
   computed: fields.KnComputedInputField,

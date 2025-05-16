@@ -1,7 +1,7 @@
 import type { Reactive } from 'vue'
 import { computed } from 'vue'
-import type { KnFormAnyField } from '@/types.ts'
-import { defineFieldSlots } from '@/utils/slotUtils.ts'
+import type { KnFormAnyField } from '@/types'
+import { defineFieldSlots } from '@/utils/slotUtils'
 
 export interface UseKnFormFieldOptions<
   ValueType, PropsType extends KnFormAnyField

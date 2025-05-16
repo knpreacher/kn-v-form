@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { VBtn, VTextField } from 'vuetify/components'
-
-import type { KnFormPasswordField } from '@/types.ts'
-import { useKnFormField } from '@/utils/fieldUtils.ts'
+import { VTextField, VBtn } from 'vuetify/components'
+import type { KnFormPasswordField } from '@/types'
+import { useKnFormField } from '@/utils/fieldUtils'
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 import { computed, ref } from 'vue'
 
