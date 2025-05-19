@@ -37,5 +37,8 @@ const fieldSlots = fieldProps.slots ?? {}
       />
       <div v-else>Unknown field type {{ fieldProps.type }}</div>
     </div>
+    <slot-renderer :slot-data="fieldSlots.footer">
+      <div class="kn-form-field__footer"></div>
+    </slot-renderer>
   </div>
 </template>

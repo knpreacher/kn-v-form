@@ -6,7 +6,7 @@ import 'vuetify/styles/main.css'
 import App from './App.vue'
 
 import './../lib/index.css'
-import { dialogPlugin } from '../lib'
+import { dialogPlugin, rulesPlugin } from '../lib'
 // import './../lib/kn-style.css'
 
 const componentOptions = {
@@ -23,4 +23,4 @@ const vuetify = createVuetify({
   }
 })
 
-createApp(App).use(vuetify).use(dialogPlugin).mount('#app')
+createApp(App).use(vuetify).use(dialogPlugin).use(rulesPlugin).mount('#app')

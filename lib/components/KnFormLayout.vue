@@ -2,7 +2,7 @@
 
 import type { SubmitEventPromise } from 'vuetify/framework'
 
-import {VForm, VExpansionPanels} from 'vuetify/components'
+import { VForm, VExpansionPanels } from 'vuetify/components'
 
 import type { KnFormData, KnFormFieldGroupData } from '@/types'
 import KnFormFieldGroup from '@/components/KnFormFieldGroup.vue'
@@ -39,7 +39,7 @@ function onFormSubmit(se: SubmitEventPromise) {
 </script>
 
 <template>
-  <v-form @submit.prevent="onFormSubmit">
+  <v-form @submit.prevent="onFormSubmit" v-bind="schema.formProps">
     <v-expansion-panels>
       <kn-form-field-group
           v-for="group in displayGroups"

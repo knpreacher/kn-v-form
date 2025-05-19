@@ -1,9 +1,11 @@
 <script setup lang="ts">
 
-import { KnFormLayout, kn, useKnDialog } from './../lib'
+import { KnFormLayout, kn, useKnDialog, useKnValidationRules } from './../lib'
 import { computed, ref } from 'vue'
 import TestCustomInput from './TestCustomInput.vue'
 import { VApp, VContainer, VDivider, VCode, VBtn } from 'vuetify/components'
+
+const rules = useKnValidationRules()
 
 const form = kn.form([
   {
@@ -27,11 +29,12 @@ const form = kn.form([
     fields: [
       kn.string('name', {
         label: 'NAME',
-        inputProps: {},
+        rules: [
+          rules.required()
+        ],
         slots: {
-          'append-inner': {
-            text: 'kg'
-          },
+          footer: 'footer kg',
+          'append-inner': 'kg',
           header_side: {
             text: 'kg',
             cls: 'text-red'
@@ -101,7 +104,11 @@ const form = kn.form([
       })
     ]
   }
-])
+], {
+  formProps: {
+    validateOn: 'submit'
+  }
+})
 
 const model = ref({
   age: 10

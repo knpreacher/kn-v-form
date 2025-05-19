@@ -1,4 +1,15 @@
-import type { VTextField, VNumberInput, VIcon, VSwitch, VRow, VSelect, VInput, VDialog } from 'vuetify/components'
+import type {
+  VTextField,
+  VNumberInput,
+  VIcon,
+  VSwitch,
+  VRow,
+  VSelect,
+  VInput,
+  VDialog,
+  VForm
+} from 'vuetify/components'
+import type { ValidationRule } from 'vuetify/framework'
 
 export type FieldDataType =
   | 'computed'
@@ -35,6 +46,8 @@ export interface KnFormComputedStringFunctionOptions {
   // emitAllData: (data: any) => void
 }
 
+export type ValidationRules = ValidationRule[]
+
 export type KnFormComputedStringFunction = (options: KnFormComputedStringFunctionOptions) => {
   content?: string,
   html?: true
@@ -60,7 +73,7 @@ export interface KnFieldSlotDataObject {
 }
 
 export type HeaderSlotNames = 'header' | 'header_label' | 'header_before_label' | 'header_after_label' | 'header_side'
-export type DefaultSlotNames = HeaderSlotNames | 'default' | 'prepend' | 'append'
+export type DefaultSlotNames = HeaderSlotNames | 'default' | 'prepend' | 'append' | 'footer'
 
 export interface KnFormAbstractField<
   InputProps extends AbstractInputProps = AbstractInputProps,
@@ -76,10 +89,11 @@ export interface KnFormAbstractField<
   untoggledValue?: any
 
   gridSize?: GridSize
-  // required?: boolean
+
+  rules?: ValidationRules
 
   inputProps?: InputProps,
-  slots?: Partial<Record<SlotNames, KnFieldSlotData>>,
+  slots?: Partial<Record<SlotNames, KnFieldSlotData | string>>,
 
   showIf?: FieldShowConditionFunction,
 }
@@ -221,6 +235,7 @@ export interface KnFormFieldGroupData extends KnFormGroup {
 export interface KnFormData {
   groups: KnFormFieldGroupData[],
   groupDefaults?: Partial<KnFormGroup>,
+  formProps?: VForm['$props']
 
   disableHiddenSubmit?: boolean
 }

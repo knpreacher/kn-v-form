@@ -9,7 +9,7 @@ const headerSlots:HeaderSlotNames[] = [
 
 const defaultSlots: DefaultSlotNames[] = [
   ...headerSlots,
-  'default', 'append', 'prepend'
+  'default', 'append', 'prepend', 'footer'
 ]
 
 export function defineFieldSlots<ExtraSlots = string>(slots: ExtraSlots[]) {

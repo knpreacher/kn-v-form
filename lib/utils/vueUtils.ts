@@ -11,7 +11,6 @@ export function mount<Props = Record<string, any>>(component: Component, props: 
     app?._container.appendChild(el)
     render(vNode, el)
   } else {
-    console.log('app', app)
     render(vNode, app?._container.firstElementChild)
   }
 
