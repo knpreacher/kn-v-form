@@ -19,7 +19,7 @@ const fieldSlots = fieldProps.slots ?? {}
 </script>
 
 <template>
-  <div class="kn-form-field__wrapper">
+  <div class="kn-form-field__wrapper" :class="{'kn-form-field__wrapper_inline': fieldProps.inlineOutLabel}">
     <slot-renderer :slot-data="fieldSlots.header" v-if="fieldProps.outLabel">
       <div class="kn-form-field__header">
         <slot-renderer :slot-data="fieldSlots.header_before_label"/>
@@ -29,6 +29,7 @@ const fieldSlots = fieldProps.slots ?? {}
         <slot-renderer :slot-data="fieldSlots.header_side"/>
       </div>
     </slot-renderer>
+    <v-spacer v-if="fieldProps.inlineOutLabel" />
     <div class="kn-form-field__inner">
       <component
           :is="bindComponent" :field-props="fieldProps"

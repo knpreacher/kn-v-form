@@ -1,10 +1,10 @@
 <script setup lang="ts" generic="T = any">
 
-import { VBtnToggle, VBtn } from 'vuetify/components'
+import { VBtnGroup, VBtn, VIcon, VInput } from 'vuetify/components'
 
 import type { DefaultSelectionOption, KnFormToggleSelectField } from '@/types'
 import { useKnFormField } from '@/utils/fieldUtils'
-import { IconValue } from 'vuetify/composables/icons'
+import { isEmpty } from '@/utils/jsUtils.ts'
 
 const {fieldProps} = defineProps<{
   fieldProps: KnFormToggleSelectField
@@ -18,8 +18,8 @@ const {model, inputProps} = useKnFormField(
 
 function getBtnIcon(option: DefaultSelectionOption) {
   if (option.label) return undefined
-  if (option.leftIcon) return option.leftIcon
-  if (option.rightIcon) return option.rightIcon
+  if (option.leftIcon) return option.leftIcon?.icon
+  if (option.rightIcon) return option.rightIcon?.icon
   return undefined
 }
 
@@ -30,23 +30,36 @@ function onOptionClick(option: DefaultSelectionOption) {
 </script>
 
 <template>
-  <v-btn-toggle v-bind="inputProps as any" v-model="model">
-    <v-btn
-        v-for="option in fieldProps.options"
-        v-bind="fieldProps.btnProps"
-        :key="`option__${option.value}`"
-        :value="option.value" :class="option.cls"
-        :text="option.label"
-        :icon="getBtnIcon(option) as any"
-        :prepend-icon="option.leftIcon as any"
-        :append-icon="option.rightIcon as any"
-        :disabled="option.disabled"
-        :readonly="option.value === model"
-        @click="onOptionClick(option)"
-    >
-
-    </v-btn>
-  </v-btn-toggle>
+  <v-input v-model="model" v-bind="inputProps as any">
+    <v-btn-group v-bind="fieldProps.btnGroupProps as any" v-model="model">
+      <v-btn
+          v-for="option in fieldProps.options"
+          v-bind="fieldProps.btnProps"
+          :key="`option__${option.value}`"
+          :value="option.value" :class="option.cls"
+          :text="option.label"
+          :prepend-icon="option.leftIcon?.icon"
+          :append-icon="option.rightIcon?.icon"
+          :disabled="option.disabled"
+          :readonly="option.value === model"
+          :active="option.value === model"
+          @click.prevent.stop="onOptionClick(option)"
+      >
+        <template #default v-if="!option.label">
+          <v-icon :icon="getBtnIcon(option)"></v-icon>
+        </template>
+      </v-btn>
+      <v-btn v-if="fieldProps.clearable"
+             @click.prevent.stop="model = undefined"
+             v-bind="fieldProps.btnProps"
+             :readonly="isEmpty(model)"
+             :active="isEmpty(model)"
+      >
+        <v-icon v-if="fieldProps.clearIcon" v-bind="fieldProps.clearIcon"></v-icon>
+        <span v-else>-</span>
+      </v-btn>
+    </v-btn-group>
+  </v-input>
 </template>
 
 <style scoped>

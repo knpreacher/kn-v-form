@@ -14,3 +14,10 @@
 .kn-form-field-group {
     width: 100%;
 }
+
+.kn-form-field__wrapper.kn-form-field__wrapper_inline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+}

@@ -1,10 +1,11 @@
 import type {
-  DefaultSelectionOption, KnFormAnyField, KnFormComputedField, KnFormCustomField,
+  DefaultSelectionOption, KnFormAnyField, KnFormBoolToggleField, KnFormComputedField, KnFormCustomField,
   KnFormData, KnFormFieldGroupData,
   KnFormFloatField, KnFormGroup,
   KnFormIntField, KnFormPasswordField, KnFormSelectField, KnFormSelectManyField,
-  KnFormStringField
+  KnFormStringField, KnFormToggleSelectField
 } from '@/types'
+import { VBtn } from 'vuetify/components'
 
 function form(
   groups: KnFormData['groups'],
@@ -52,6 +53,21 @@ function custom(
     name: key,
     type: 'custom'
   } as KnFormCustomField
+}
+
+function boolToggle(
+  key: string,
+  positiveBtn: string | VBtn['$props'],
+  negativeBtn: string | VBtn['$props'],
+  options?: FieldOptions<Omit<KnFormBoolToggleField, 'positiveBtn' | 'negativeBtn'>>
+): KnFormBoolToggleField {
+  return {
+    ...(options ?? {}),
+    positiveBtn,
+    negativeBtn,
+    name: key,
+    type: 'bool_toggle'
+  } as KnFormBoolToggleField
 }
 
 function string(
@@ -111,6 +127,19 @@ function select<ItemOption extends DefaultSelectionOption = DefaultSelectionOpti
   } as KnFormSelectField
 }
 
+function toggleSelect<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
+  key: string,
+  items: ItemOption[],
+  options?: FieldOptions<Omit<KnFormToggleSelectField<ItemOption>, 'options'>>
+): KnFormToggleSelectField {
+  return {
+    ...(options ?? {}),
+    options: items,
+    name: key,
+    type: 'toggle_select'
+  } as KnFormToggleSelectField
+}
+
 function selectMany<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
   key: string,
   items: ItemOption[],
@@ -130,10 +159,12 @@ export {
 
   computed,
   custom,
+  boolToggle,
   string,
   password,
   int,
   float,
   select,
+  toggleSelect,
   selectMany
 }

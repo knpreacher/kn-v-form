@@ -8,13 +8,14 @@ import type {
   VInput,
   VDialog,
   VBtn,
-  VForm, VBtnToggle
+  VForm, VBtnToggle, VBtnGroup
 } from 'vuetify/components'
 import type { ValidationRule } from 'vuetify/framework'
 
 export type FieldDataType =
   | 'computed'
   | 'custom'
+  | 'bool_toggle'
   | 'string'
   | 'password'
   | 'int'
@@ -24,6 +25,7 @@ export type FieldDataType =
   | 'datetime'
   | 'boolean'
   | 'select'
+  | 'toggle_select'
   | 'select_many'
   | 'checkbox'
   | 'radio'
@@ -144,6 +146,19 @@ export interface KnFormCustomField extends KnFormAbstractField<
 }
 
 //
+// Bool toggle Field
+//
+export interface KnFormBoolToggleField extends KnFormAbstractField<
+  PreparedInputProps<VInput>,
+  GetSlots<VInput>
+> {
+  btnGroupProps?: VBtnGroup['$props'],
+  emptyAsFalse?: boolean,
+  positiveBtn?: string | VBtn['$props'],
+  negativeBtn?: string | VBtn['$props']
+}
+
+//
 // String Field
 //
 export interface KnFormStringField extends KnFormAbstractField<
@@ -203,11 +218,15 @@ export interface KnFormSelectField<
 export interface KnFormToggleSelectField<
   Options extends DefaultSelectionOption = DefaultSelectionOption
 > extends KnFormAbstractField<
-  PreparedInputProps<Omit<VBtnToggle['$props'], 'multiple'>>,
-  GetSlots<VBtnToggle>
+  PreparedInputProps<VInput>,
+  GetSlots<VInput>
 > {
   options: Options[],
-  btnProps?: VBtn['$props']
+  clearable?: boolean
+  clearValue?: any
+  clearIcon?: VIcon['$props']
+  btnProps?: VBtn,
+  btnGroupProps?: Omit<VBtnToggle['$props'], 'multiple'>,
 }
 
 //
@@ -226,6 +245,7 @@ export interface KnFormSelectManyField<
 export type KnFormAnyField =
   KnFormComputedField
   | KnFormCustomField
+  | KnFormBoolToggleField
   | KnFormStringField
   | KnFormIntField
   | KnFormFloatField

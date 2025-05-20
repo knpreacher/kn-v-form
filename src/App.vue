@@ -76,6 +76,36 @@ const form = kn.form([
       ], {
         label: 'SELECT'
       }),
+      kn.boolToggle('bool_toggle', {
+        text: 'Yes'
+      }, {text: 'No'}),
+      kn.toggleSelect('toggle_select', [
+        {
+          value: 4,
+          label: '4o'
+        },
+        {
+          value: 5,
+          label: '5o',
+          disabled: true
+        },
+        {
+          value: 6,
+          label: '6o'
+        }
+      ], {
+        inlineOutLabel: true,
+        clearable: true,
+        rules: [
+          rules.required()
+        ],
+        label: 'SELECT TOGGLE',
+        inputProps: {},
+        btnProps: {
+          // color: 'primary',
+          activeColor: 'green'
+        }
+      }),
       kn.selectMany('selectMany', [
         {
           value: 4,

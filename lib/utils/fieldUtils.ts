@@ -1,4 +1,4 @@
-import type { Reactive } from 'vue'
+import type { Reactive, Ref } from 'vue'
 import { computed } from 'vue'
 import type { KnFormAnyField } from '@/types'
 import { defineFieldSlots } from '@/utils/slotUtils'
@@ -16,7 +16,7 @@ export function useKnFormField<
   ValueType,
   PropsType extends KnFormAnyField,
 >(
-  model: Reactive<ValueType>,
+  model: Ref<ValueType>,
   fieldProps: PropsType,
   slotNames: (keyof Required<Required<PropsType>['slots']>)[]
 ) {

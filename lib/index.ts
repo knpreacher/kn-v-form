@@ -9,7 +9,6 @@ import './index.css'
 import { dialogPlugin, useKnDialog } from '@/dialogPlugin'
 import { rulesPlugin, useKnValidationRules, createRules } from '@/validation/rulesPlugin'
 
-const {form, int, custom, string, float, group, select, selectMany, password, computed} = kn
 export {
   KnFormLayout,
   SlotRenderer,
@@ -23,16 +22,4 @@ export {
 
   dialogPlugin,
   useKnDialog,
-
-  form,
-  group,
-
-  int,
-  custom,
-  string,
-  float,
-  select,
-  selectMany,
-  password,
-  computed
 }
