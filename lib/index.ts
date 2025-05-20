@@ -7,7 +7,7 @@ import * as jsUtils from './utils/jsUtils'
 export * from './types'
 import './index.css'
 import { dialogPlugin, useKnDialog } from '@/dialogPlugin'
-import { rulesPlugin, useKnValidationRules } from '@/validation/rulesPlugin'
+import { rulesPlugin, useKnValidationRules, createRules } from '@/validation/rulesPlugin'
 
 const {form, int, custom, string, float, group, select, selectMany, password, computed} = kn
 export {
@@ -18,6 +18,7 @@ export {
   jsUtils,
 
   rulesPlugin,
+  createRules,
   useKnValidationRules,
 
   dialogPlugin,

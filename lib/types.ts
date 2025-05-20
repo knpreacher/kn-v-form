@@ -7,7 +7,8 @@ import type {
   VSelect,
   VInput,
   VDialog,
-  VForm
+  VBtn,
+  VForm, VBtnToggle
 } from 'vuetify/components'
 import type { ValidationRule } from 'vuetify/framework'
 
@@ -196,6 +197,20 @@ export interface KnFormSelectField<
 }
 
 //
+// Toggle select Field
+//
+
+export interface KnFormToggleSelectField<
+  Options extends DefaultSelectionOption = DefaultSelectionOption
+> extends KnFormAbstractField<
+  PreparedInputProps<Omit<VBtnToggle['$props'], 'multiple'>>,
+  GetSlots<VBtnToggle>
+> {
+  options: Options[],
+  btnProps?: VBtn['$props']
+}
+
+//
 // Select many Field
 //
 
@@ -215,6 +230,7 @@ export type KnFormAnyField =
   | KnFormIntField
   | KnFormFloatField
   | KnFormSelectField
+  | KnFormToggleSelectField
   | KnFormSelectManyField
 
 
