@@ -106,6 +106,17 @@ const form = kn.form([
           activeColor: 'green'
         }
       }),
+      kn.gridSelect('grid_select', Array(15).fill(0).map((_, index) => ({
+        value: index,
+        label: `o${index}`,
+        disabled: Math.random() > 0.5
+      })), {
+        label: 'grid_SELECT',
+        selectedCls: 'bg-primary text-white',
+        inputGridSize: {
+          cols: 3
+        }
+      }),
       kn.selectMany('selectMany', [
         {
           value: 4,

@@ -1,7 +1,7 @@
 import type {
   DefaultSelectionOption, KnFormAnyField, KnFormBoolToggleField, KnFormComputedField, KnFormCustomField,
   KnFormData, KnFormFieldGroupData,
-  KnFormFloatField, KnFormGroup,
+  KnFormFloatField, KnFormGridSelectField, KnFormGroup,
   KnFormIntField, KnFormPasswordField, KnFormSelectField, KnFormSelectManyField,
   KnFormStringField, KnFormToggleSelectField
 } from '@/types'
@@ -68,6 +68,19 @@ function boolToggle(
     name: key,
     type: 'bool_toggle'
   } as KnFormBoolToggleField
+}
+
+function gridSelect<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
+  key: string,
+  items: ItemOption[],
+  options?: FieldOptions<Omit<KnFormGridSelectField<ItemOption>, 'options'>>
+): KnFormGridSelectField {
+  return {
+    ...(options ?? {}),
+    options: items,
+    name: key,
+    type: 'grid_select'
+  } as KnFormGridSelectField
 }
 
 function string(
@@ -160,6 +173,7 @@ export {
   computed,
   custom,
   boolToggle,
+  gridSelect,
   string,
   password,
   int,

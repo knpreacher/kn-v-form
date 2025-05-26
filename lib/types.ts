@@ -8,7 +8,7 @@ import type {
   VInput,
   VDialog,
   VBtn,
-  VForm, VBtnToggle, VBtnGroup
+  VForm, VBtnToggle, VBtnGroup, VCard
 } from 'vuetify/components'
 import type { ValidationRule } from 'vuetify/framework'
 
@@ -16,6 +16,7 @@ export type FieldDataType =
   | 'computed'
   | 'custom'
   | 'bool_toggle'
+  | 'grid_select'
   | 'string'
   | 'password'
   | 'int'
@@ -159,6 +160,21 @@ export interface KnFormBoolToggleField extends KnFormAbstractField<
 }
 
 //
+// Bool toggle Field
+//
+export interface KnFormGridSelectField<
+  Options extends DefaultSelectionOption = DefaultSelectionOption
+> extends KnFormAbstractField<
+  PreparedInputProps<VInput>,
+  GetSlots<VInput>
+> {
+  options: Options[],
+  selectedCls?: string,
+  cardProps?: VCard['$props']
+  inputGridSize?: GridSize
+}
+
+//
 // String Field
 //
 export interface KnFormStringField extends KnFormAbstractField<
@@ -246,6 +262,7 @@ export type KnFormAnyField =
   KnFormComputedField
   | KnFormCustomField
   | KnFormBoolToggleField
+  | KnFormGridSelectField
   | KnFormStringField
   | KnFormIntField
   | KnFormFloatField

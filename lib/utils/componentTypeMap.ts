@@ -4,6 +4,7 @@ export const componentMap = Object.freeze<Partial<Record<FieldDataType, any>>>({
   computed: fields.KnComputedInputField,
   custom: fields.KnCustomInputField,
   bool_toggle: fields.KnBoolToggleInputField,
+  grid_select: fields.KnGridSelectInputField,
   string: fields.KnStringInputField,
   password: fields.KnPasswordInputField,
   int: fields.KnIntInputField,
