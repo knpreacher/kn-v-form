@@ -11,9 +11,11 @@ import type {
   VForm, VBtnToggle, VBtnGroup, VCard
 } from 'vuetify/components'
 import type { ValidationRule } from 'vuetify/framework'
+import { MaybeRef } from 'vue'
 
 export type FieldDataType =
   | 'computed'
+  | 'empty'
   | 'custom'
   | 'bool_toggle'
   | 'grid_select'
@@ -120,6 +122,12 @@ export interface DefaultSelectionOption<T = any> {
   [key: string]: any
 }
 
+export interface InputOptions<
+  Options extends DefaultSelectionOption = DefaultSelectionOption
+> {
+  options: MaybeRef<Options[]>
+}
+
 // type FieldSlots<T extends string> = DefaultSlotNames | T
 type GetSlots<T extends { $slots: Record<string, any> }> = keyof T['$slots'] | DefaultSlotNames
 //
@@ -167,8 +175,7 @@ export interface KnFormGridSelectField<
 > extends KnFormAbstractField<
   PreparedInputProps<VInput>,
   GetSlots<VInput>
-> {
-  options: Options[],
+>, InputOptions<Options> {
   selectedCls?: string,
   cardProps?: VCard['$props']
   inputGridSize?: GridSize
@@ -223,8 +230,8 @@ export interface KnFormSelectField<
 > extends KnFormAbstractField<
   PreparedInputProps<Omit<VSelect['$props'], 'items' | 'multiple' | 'options'>>,
   GetSlots<VSelect>
-> {
-  options: Options[]
+>, InputOptions<Options> {
+
 }
 
 //
@@ -236,8 +243,7 @@ export interface KnFormToggleSelectField<
 > extends KnFormAbstractField<
   PreparedInputProps<VInput>,
   GetSlots<VInput>
-> {
-  options: Options[],
+>, InputOptions<Options> {
   clearable?: boolean
   clearValue?: any
   clearIcon?: VIcon['$props']
@@ -254,8 +260,8 @@ export interface KnFormSelectManyField<
 > extends KnFormAbstractField<
   PreparedInputProps<Omit<VSelect['$props'], 'items' | 'multiple' | 'options'>>,
   GetSlots<VSelect>
-> {
-  options: Options[]
+>, InputOptions<Options> {
+
 }
 
 export type KnFormAnyField =

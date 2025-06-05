@@ -3,7 +3,7 @@
 import { VBtnGroup, VBtn, VIcon, VInput } from 'vuetify/components'
 
 import type { DefaultSelectionOption, KnFormToggleSelectField } from '@/types'
-import { useKnFormField } from '@/utils/fieldUtils'
+import { useKnFormField, useSelectionOptions } from '@/utils/fieldUtils'
 import { isEmpty } from '@/utils/jsUtils.ts'
 
 const {fieldProps} = defineProps<{
@@ -15,6 +15,8 @@ const {model, inputProps} = useKnFormField(
     fieldProps,
     []
 )
+
+const {options} = useSelectionOptions(fieldProps)
 
 function getBtnIcon(option: DefaultSelectionOption) {
   if (option.label) return undefined
@@ -33,7 +35,7 @@ function onOptionClick(option: DefaultSelectionOption) {
   <v-input v-model="model" v-bind="inputProps as any">
     <v-btn-group v-bind="fieldProps.btnGroupProps as any" v-model="model">
       <v-btn
-          v-for="option in fieldProps.options"
+          v-for="option in options"
           v-bind="fieldProps.btnProps"
           :key="`option__${option.value}`"
           :value="option.value" :class="option.cls"

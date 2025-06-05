@@ -6,6 +6,7 @@ import type {
   KnFormStringField, KnFormToggleSelectField
 } from '@/types'
 import { VBtn } from 'vuetify/components'
+import { MaybeRef } from 'vue'
 
 function form(
   groups: KnFormData['groups'],
@@ -72,7 +73,7 @@ function boolToggle(
 
 function gridSelect<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
   key: string,
-  items: ItemOption[],
+  items: MaybeRef<ItemOption[]>,
   options?: FieldOptions<Omit<KnFormGridSelectField<ItemOption>, 'options'>>
 ): KnFormGridSelectField {
   return {
@@ -129,7 +130,7 @@ function float(
 
 function select<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
   key: string,
-  items: ItemOption[],
+  items: MaybeRef<ItemOption[]>,
   options?: FieldOptions<Omit<KnFormSelectField<ItemOption>, 'options'>>
 ): KnFormSelectField {
   return {
@@ -142,7 +143,7 @@ function select<ItemOption extends DefaultSelectionOption = DefaultSelectionOpti
 
 function toggleSelect<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
   key: string,
-  items: ItemOption[],
+  items: MaybeRef<ItemOption[]>,
   options?: FieldOptions<Omit<KnFormToggleSelectField<ItemOption>, 'options'>>
 ): KnFormToggleSelectField {
   return {
@@ -155,7 +156,7 @@ function toggleSelect<ItemOption extends DefaultSelectionOption = DefaultSelecti
 
 function selectMany<ItemOption extends DefaultSelectionOption = DefaultSelectionOption>(
   key: string,
-  items: ItemOption[],
+  items: MaybeRef<ItemOption[]>,
   options?: FieldOptions<Omit<KnFormSelectManyField<ItemOption>, 'options'>>
 ): KnFormSelectManyField {
   return {

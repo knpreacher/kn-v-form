@@ -1,4 +1,4 @@
-import { KnFormLayout, fields } from './components'
+import { KnFormLayout, KnFormFieldWrapper, fields } from './components'
 import SlotRenderer from './components/helpers/SlotRenderer.vue'
 import * as kn from './utils/useKnForm'
 
@@ -11,6 +11,7 @@ import { rulesPlugin, useKnValidationRules, createRules } from '@/validation/rul
 
 export {
   KnFormLayout,
+  KnFormFieldWrapper,
   SlotRenderer,
   fields,
   kn,

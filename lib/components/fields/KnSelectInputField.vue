@@ -3,7 +3,7 @@
 import { type VListItem, VSelect } from 'vuetify/components'
 
 import type { DefaultSelectionOption, KnFormSelectField } from '@/types'
-import { useKnFormField } from '@/utils/fieldUtils'
+import { useKnFormField, useSelectionOptions } from '@/utils/fieldUtils'
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 
 const {fieldProps} = defineProps<{
@@ -15,6 +15,8 @@ const {model, inputProps, label, inputSlots} = useKnFormField(
     fieldProps,
     [ 'append-inner', 'prepend-inner' ]
 )
+
+const {options} = useSelectionOptions(fieldProps)
 
 function getItemProps(item: DefaultSelectionOption): VListItem['$props'] {
   return {
@@ -29,7 +31,7 @@ function getItemProps(item: DefaultSelectionOption): VListItem['$props'] {
       v-model="model"
       v-bind="inputProps as any"
       :label="label"
-      :items="fieldProps.options"
+      :items="options"
       item-title="label"
       item-value="value"
       :item-props="getItemProps"

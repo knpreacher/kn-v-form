@@ -1,11 +1,21 @@
 <script setup lang="ts">
 
-import { KnFormLayout, kn, useKnDialog, useKnValidationRules } from './../lib'
+import { KnFormLayout, KnFormFieldWrapper, kn, useKnDialog, useKnValidationRules } from './../lib'
 import { computed, ref } from 'vue'
 import TestCustomInput from './TestCustomInput.vue'
 import { VApp, VContainer, VDivider, VCode, VBtn } from 'vuetify/components'
 
 const rules = useKnValidationRules()
+
+const computedOptions = computed(() => {
+  return Array(40).fill(0).map((_, index)=>{
+    return {
+      value: index,
+      label: `${index}o`,
+      disabled: index < model.value.age
+    }
+  })
+})
 
 const form = kn.form([
   {
@@ -106,11 +116,7 @@ const form = kn.form([
           activeColor: 'green'
         }
       }),
-      kn.gridSelect('grid_select', Array(15).fill(0).map((_, index) => ({
-        value: index,
-        label: `o${index}`,
-        disabled: Math.random() > 0.5
-      })), {
+      kn.gridSelect('grid_select', computedOptions, {
         label: 'grid_SELECT',
         selectedCls: 'bg-primary text-white',
         inputGridSize: {
@@ -193,6 +199,9 @@ function onOpenDialogBtnClick() {
       <v-divider/>
       <h3>Form</h3>
       <kn-form-layout :schema="form" v-model="model"/>
+      <v-divider/>
+      <h3>Single field</h3>
+<!--      <kn-form-field-wrapper />-->
       <v-divider/>
       <h3>Dialog</h3>
       <v-btn @click="onOpenDialogBtnClick">Open Dialog</v-btn>

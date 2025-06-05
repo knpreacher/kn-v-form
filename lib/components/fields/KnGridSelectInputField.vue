@@ -3,7 +3,7 @@
 import { VItemGroup, VIcon, VItem, VInput, VRow, VCol, VCard, VCardText } from 'vuetify/components'
 
 import type { DefaultSelectionOption, KnFormGridSelectField } from '@/types'
-import { useKnFormField } from '@/utils/fieldUtils'
+import { useKnFormField, useSelectionOptions } from '@/utils/fieldUtils'
 
 const {fieldProps} = defineProps<{
   fieldProps: KnFormGridSelectField
@@ -14,6 +14,8 @@ const {model, inputProps} = useKnFormField(
     fieldProps,
     []
 )
+
+const {options} = useSelectionOptions(fieldProps)
 
 function getBtnIcon(option: DefaultSelectionOption) {
   if (option.leftIcon) return option.leftIcon?.icon
@@ -38,7 +40,7 @@ function bindSelectedCls(cls: boolean | (string | undefined)[] | undefined, sele
     <v-item-group v-model="model" :selectedClass="fieldProps.selectedCls">
       <v-row dense>
         <v-col
-            v-for="option in fieldProps.options"
+            v-for="option in options"
             v-bind="fieldProps.inputGridSize"
             :key="`option__${option.value}`"
         >
