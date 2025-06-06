@@ -4,11 +4,39 @@ import { KnFormLayout, KnFormFieldWrapper, kn, useKnDialog, useKnValidationRules
 import { computed, ref } from 'vue'
 import TestCustomInput from './TestCustomInput.vue'
 import { VApp, VContainer, VDivider, VCode, VBtn } from 'vuetify/components'
+import { BaseApiProvider } from '@/web/apiProvider'
 
 const rules = useKnValidationRules()
 
+const testApiProvider = new BaseApiProvider({
+  list: async (query) => {
+    let response = await fetch(`http://localhost:3000/items?sleep=200&${new URLSearchParams(query).toString()}`, {
+      method: 'GET'
+    })
+    return await response.json()
+  },
+  getItemsFromListResponse: (response) => {
+    return response.items
+  },
+  getLimitFromListResponse: (response) => {
+    return response.limit
+  },
+  getOffsetFromListResponse: (response) => {
+    return response.offset
+  },
+  getTotalFromListResponse: (response) => {
+    return response.count
+  },
+  itemAsOption: (item) => {
+    return {
+      value: item.id,
+      label: `[${item.id}] - ${item.name} / ${item.age}`
+    }
+  }
+})
+
 const computedOptions = computed(() => {
-  return Array(40).fill(0).map((_, index)=>{
+  return Array(10).fill(0).map((_, index) => {
     return {
       value: index,
       label: `${index}o`,
@@ -148,7 +176,11 @@ const form = kn.form([
       kn.password('password', {
         label: 'pass',
         passwordHideIcon: 'lock'
-      })
+      }),
+      kn.apiObjectSelect(
+          'api_object_select',
+          testApiProvider
+      )
     ]
   }
 ], {
@@ -201,7 +233,7 @@ function onOpenDialogBtnClick() {
       <kn-form-layout :schema="form" v-model="model"/>
       <v-divider/>
       <h3>Single field</h3>
-<!--      <kn-form-field-wrapper />-->
+      <!--      <kn-form-field-wrapper />-->
       <v-divider/>
       <h3>Dialog</h3>
       <v-btn @click="onOpenDialogBtnClick">Open Dialog</v-btn>

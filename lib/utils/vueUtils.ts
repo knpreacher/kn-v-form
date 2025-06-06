@@ -1,5 +1,7 @@
-import type { Component, VNode, App } from 'vue'
-import { createVNode, render } from 'vue'
+import type { Component, VNode, App, Ref } from 'vue'
+import { computed, createVNode, ref, render, watch } from 'vue'
+import { debounce } from '@/utils/jsUtils.ts'
+import { jsUtils } from '@/index.ts'
 
 
 export function mount<Props = Record<string, any>>(component: Component, props: Props, app?: App, el?: HTMLDivElement) {
@@ -15,4 +17,28 @@ export function mount<Props = Record<string, any>>(component: Component, props: 
   }
 
   return {vNode}
+}
+
+export function debounceRef<T = any>(
+  valueRef: Ref<T>,
+  delay: number,
+  options?: {
+    emitEmptyImmediate?: boolean
+  }
+) {
+  const internal = ref<T>(valueRef.value)
+  const debouncedSet = debounce((v: T) => internal.value = v, delay)
+
+  function setValue(v: T) {
+    if (options?.emitEmptyImmediate && jsUtils.isEmpty(v)) {
+      internal.value = v
+    } else {
+      debouncedSet(v)
+    }
+  }
+
+  watch(valueRef, (v) => {
+    setValue(v)
+  })
+  return computed(() => internal.value)
 }

@@ -12,6 +12,7 @@ import type {
 } from 'vuetify/components'
 import type { ValidationRule } from 'vuetify/framework'
 import { MaybeRef } from 'vue'
+import type { BaseApiProvider } from '@/web/apiProvider.ts'
 
 export type FieldDataType =
   | 'computed'
@@ -32,6 +33,7 @@ export type FieldDataType =
   | 'select_many'
   | 'checkbox'
   | 'radio'
+  | 'api_object_select'
 
 type AbstractInputProps = Record<string, any>
 
@@ -264,6 +266,22 @@ export interface KnFormSelectManyField<
 
 }
 
+//
+// ApiObject select
+//
+
+export interface KnFormApiObjectSelectField<
+  ApiProvider extends BaseApiProvider = BaseApiProvider,
+  Options extends DefaultSelectionOption = DefaultSelectionOption,
+> extends KnFormAbstractField<
+  PreparedInputProps<Omit<VTextField['$props'], 'items' | 'multiple' | 'options'>>,
+  GetSlots<VTextField>
+>, InputOptions<Options> {
+  apiProvider: ApiProvider,
+  returnObject?: boolean
+  autoFetch?: boolean
+}
+
 export type KnFormAnyField =
   KnFormComputedField
   | KnFormCustomField
@@ -275,6 +293,7 @@ export type KnFormAnyField =
   | KnFormSelectField
   | KnFormToggleSelectField
   | KnFormSelectManyField
+  | KnFormApiObjectSelectField
 
 
 export interface KnFormGroup {

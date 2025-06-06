@@ -11,5 +11,6 @@ export const componentMap = Object.freeze<Partial<Record<FieldDataType, any>>>({
   float: fields.KnFloatInputField,
   select: fields.KnSelectInputField,
   toggle_select: fields.KnToggleSelectInputField,
-  select_many: fields.KnSelectManyInputField
+  select_many: fields.KnSelectManyInputField,
+  api_object_select: fields.KnApiObjectSelectInputField
 })

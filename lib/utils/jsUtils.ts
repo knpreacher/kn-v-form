@@ -144,4 +144,23 @@ function styleValue(value?: string | number) {
   return undefined
 }
 
-export { deepJoinObjects, copyObject, deepClone, isPlainObject, isEmpty, styleValue }
+function debounce<T extends (...args: any[]) => any>(fn: T, delay: number) {
+  let timeout: any
+  return (...args: any[]) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => fn(...args), delay)
+  }
+}
+
+function randString(length: number = 8) {
+  let result = ''
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const charactersLength = characters.length
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+  }
+  return result
+}
+
+export { deepJoinObjects, copyObject, deepClone, isPlainObject, isEmpty, styleValue, debounce, randString }

@@ -1,12 +1,25 @@
 import type {
-  DefaultSelectionOption, KnFormAnyField, KnFormBoolToggleField, KnFormComputedField, KnFormCustomField,
-  KnFormData, KnFormFieldGroupData,
-  KnFormFloatField, KnFormGridSelectField, KnFormGroup,
-  KnFormIntField, KnFormPasswordField, KnFormSelectField, KnFormSelectManyField,
-  KnFormStringField, KnFormToggleSelectField
+  DefaultSelectionOption,
+  KnFormAnyField,
+  KnFormApiObjectSelectField,
+  KnFormBoolToggleField,
+  KnFormComputedField,
+  KnFormCustomField,
+  KnFormData,
+  KnFormFieldGroupData,
+  KnFormFloatField,
+  KnFormGridSelectField,
+  KnFormGroup,
+  KnFormIntField,
+  KnFormPasswordField,
+  KnFormSelectField,
+  KnFormSelectManyField,
+  KnFormStringField,
+  KnFormToggleSelectField
 } from '@/types'
 import { VBtn } from 'vuetify/components'
 import { MaybeRef } from 'vue'
+import type { BaseApiProvider } from '@/web/apiProvider.ts'
 
 function form(
   groups: KnFormData['groups'],
@@ -167,6 +180,22 @@ function selectMany<ItemOption extends DefaultSelectionOption = DefaultSelection
   } as KnFormSelectManyField
 }
 
+function apiObjectSelect<
+  ApiProvider extends BaseApiProvider = BaseApiProvider,
+  ItemOption extends DefaultSelectionOption = DefaultSelectionOption
+>(
+  key: string,
+  apiProvider: ApiProvider,
+  options?: FieldOptions<Omit<KnFormApiObjectSelectField<ApiProvider, ItemOption>, 'apiProvider'>>
+): KnFormApiObjectSelectField<ApiProvider, ItemOption> {
+  return {
+    ...(options ?? {}),
+    apiProvider,
+    name: key,
+    type: 'api_object_select'
+  } as KnFormApiObjectSelectField<ApiProvider, ItemOption>
+}
+
 export {
   form,
   group,
@@ -181,5 +210,6 @@ export {
   float,
   select,
   toggleSelect,
-  selectMany
+  selectMany,
+  apiObjectSelect
 }
