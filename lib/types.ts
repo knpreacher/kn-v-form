@@ -278,8 +278,10 @@ export interface KnFormApiObjectSelectField<
   GetSlots<VTextField>
 >, InputOptions<Options> {
   apiProvider: ApiProvider,
+  emptyText?: string
+  objectIdText?: string
   returnObject?: boolean
-  autoFetch?: boolean
+  autoFetch?: (value: any) => boolean
 }
 
 export type KnFormAnyField =

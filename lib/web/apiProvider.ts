@@ -15,7 +15,7 @@ export interface PreparedListResponse<T = any> {
 }
 
 export interface ApiProviderOptions<OType = any, ListResponse = any> {
-  retrieveObject: <T = OType>(itemQuery: string) => Promise<T>
+  retrieveObject: <T = OType>(itemQuery: any) => Promise<T>
   list: (query: ListQueryOptions) => Promise<ListResponse>
   itemAsOption?: <T = OType>(item: T) => DefaultSelectionOption
   getItemsFromListResponse: <T = OType>(listResponse: ListResponse) => T[]
@@ -33,7 +33,7 @@ export class BaseApiProvider {
     this._options = options
   }
 
-  async retrieveObject(itemQuery: string) {
+  async retrieveObject(itemQuery: any) {
     if (!this._options.retrieveObject) {
       throw new Error('retrieveObject is not defined')
     }

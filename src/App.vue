@@ -15,6 +15,14 @@ const testApiProvider = new BaseApiProvider({
     })
     return await response.json()
   },
+  retrieveObject: async (id) => {
+    let response = await fetch(`http://localhost:3000/item/${id}`, {
+      method: 'GET'
+    })
+    const respData = await response.json()
+    console.log('retrieveObject', respData)
+    return respData
+  },
   getItemsFromListResponse: (response) => {
     return response.items
   },
@@ -179,7 +187,11 @@ const form = kn.form([
       }),
       kn.apiObjectSelect(
           'api_object_select',
-          testApiProvider
+          testApiProvider, {
+            autoFetch: (data: any) => {
+              return typeof data === 'string' || typeof data === 'number'
+            }
+          }
       )
     ]
   }
@@ -190,7 +202,8 @@ const form = kn.form([
 })
 
 const model = ref({
-  age: 10
+  age: 10,
+  api_object_select: 101
 })
 const displayModel = computed(() => JSON.stringify(model.value, null, 2))
 

@@ -91,9 +91,11 @@ app.get('/items', (req, res) => {
 })
 
 app.get('/item/:id', (req, res) => {
-    const id = req.params.id
-    const index = parseInt(id.split('-')[1])
-    const item = generateListItem(index)
+    const id = parseInt(req.params.id)
+    const item = testItems.find(item => item.id === id)
+    if (!item) {
+        return res.status(404).send('Item not found')
+    }
     res.send(item)
 })
 

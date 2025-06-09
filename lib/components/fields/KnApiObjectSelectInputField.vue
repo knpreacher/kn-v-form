@@ -2,7 +2,7 @@
 import { VTextField, VMenu, VInfiniteScroll, VCard, VListItem } from 'vuetify/components'
 
 import type { KnFormApiObjectSelectField } from '@/types'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useKnFormField } from '@/utils/fieldUtils.ts'
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 import { debounceRef } from '@/utils/vueUtils.ts'
@@ -18,7 +18,7 @@ interface InfiniteScrollLoadOptions {
   done: (status: 'error' | 'loading' | 'empty' | 'ok') => void
 }
 
-const _model = defineModel<T>({required: true})
+const _model = defineModel<T>()
 
 const {model, inputProps, label, inputSlots} = useKnFormField(
     _model,
@@ -28,11 +28,41 @@ const {model, inputProps, label, inputSlots} = useKnFormField(
 
 const selectedItem = ref<T | null>(null)
 
+const needFilter = ref(true)
+
 function setSelected(item: T | null) {
   selectedItem.value = item
+  if (!item) return
+  menuVisible.value = false
+  filterText.value = getItemLabel(item)
+  needFilter.value = false
+}
+
+watch(selectedItem, value => {
+  if (!value) {
+    model.value = undefined
+  } else {
+    model.value = fieldProps.returnObject ? value : getItemValue(value)
+  }
+})
+
+function getItemLabel(item: T) {
+  const opt = itemAsOption(item)
+  return opt.label ?? String(opt.value)
+}
+
+function getItemValue(item: T) {
+  const opt = itemAsOption(item)
+  return opt.value
 }
 
 const menuVisible = ref(false)
+
+function needAutoFetch() {
+  return !!model.value && (fieldProps.autoFetch?.(model.value) ?? false)
+}
+
+const modelFetchLoading = ref(needAutoFetch())
 
 const items = ref<T[]>([])
 
@@ -47,19 +77,16 @@ const infScrollKey = ref(randString())
 
 watch(debouncedFilterText, () => {
   items.value = []
-  if (!menuVisible.value) {
-    menuVisible.value = true
+  if (needFilter.value) {
+    if (!menuVisible.value) {
+      menuVisible.value = true
+    }
+    infScrollKey.value = randString()
+  } else {
+    menuVisible.value = false
+    needFilter.value = true
   }
-  infScrollKey.value = randString()
 })
-
-// watch(menuVisible, (value) => {
-//   if (!value) return
-//   fieldProps.apiProvider.preparedList({limit: 25, offset: 0}).then((res) => {
-//     console.log(res)
-//     items.value.push(...res.items)
-//   })
-// })
 
 function onLoadMore(options: InfiniteScrollLoadOptions) {
   console.log(options)
@@ -68,7 +95,6 @@ function onLoadMore(options: InfiniteScrollLoadOptions) {
     offset: items.value.length ?? 0,
     search: debouncedFilterText.value
   }).then((res) => {
-    console.log(res)
     if (!res.items.length) {
       options.done('empty')
       return
@@ -78,10 +104,36 @@ function onLoadMore(options: InfiniteScrollLoadOptions) {
   })
 }
 
+
+function onInputBlur() {
+  needFilter.value = false
+  if (selectedItem.value) {
+    if (!filterText.value) {
+      selectedItem.value = null
+    } else {
+      filterText.value = getItemLabel(selectedItem.value)
+    }
+  } else {
+    filterText.value = ''
+  }
+}
+
 function itemAsOption(item: T) {
   return fieldProps.apiProvider.itemAsOption(item)
 }
 
+onMounted(() => {
+  if (!needAutoFetch()) return
+  modelFetchLoading.value = true
+  fieldProps.apiProvider.retrieveObject(model.value).then(res => {
+    setSelected(res)
+  }).catch(() => {
+    needFilter.value = false
+    filterText.value = `${fieldProps.objectIdText ?? 'Object'} [${model.value}]`
+  }).finally(() => {
+    modelFetchLoading.value = false
+  })
+})
 
 </script>
 
@@ -92,6 +144,10 @@ function itemAsOption(item: T) {
   >
     <template v-slot:activator="{ props }">
       <v-text-field
+          autocomplete="off"
+          :loading="modelFetchLoading"
+          :readonly="modelFetchLoading"
+          @blur="onInputBlur"
           v-bind="{...props, ...inputProps} as any" :label="label"
           v-model="filterText"
       >
@@ -130,9 +186,7 @@ function itemAsOption(item: T) {
           </pass>
         </template>
         <template #empty>
-          <div v-if="isEmpty">
-            No data
-          </div>
+          <div v-if="isEmpty" v-text="fieldProps.emptyText"></div>
         </template>
       </v-infinite-scroll>
     </v-card>
@@ -140,5 +194,4 @@ function itemAsOption(item: T) {
 </template>
 
 <style scoped>
-
 </style>
