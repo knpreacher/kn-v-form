@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { KnFormAnyField, KnFormGroup } from '@/types'
-import {VExpansionPanel} from 'vuetify/components'
+import { VExpansionPanel } from 'vuetify/components'
 import KnFormFieldGrid from '@/components/KnFormFieldGrid.vue'
 
 const {fields, groupData} = defineProps<{
@@ -23,6 +23,9 @@ const model = defineModel<Record<string, any>>({required: true})
     </template>
   </v-expansion-panel>
   <div v-else class="kn-form-field-group">
+    <div class="kn-form-field-group__header" v-if="groupData.label">
+      <div class="kn-form-field-group__label" v-text="groupData.label"></div>
+    </div>
     <kn-form-field-grid
         :fields="fields"
         :group-data="groupData"

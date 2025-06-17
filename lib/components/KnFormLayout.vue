@@ -6,7 +6,7 @@ import { VForm, VExpansionPanels } from 'vuetify/components'
 
 import type { KnFormData, KnFormFieldGroupData } from '@/types'
 import KnFormFieldGroup from '@/components/KnFormFieldGroup.vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { deepJoinObjects } from '@/utils/jsUtils'
 
 const {schema} = defineProps<{
@@ -19,6 +19,8 @@ const emit = defineEmits<{
   onSubmit: [ value: SubmitEventPromise ],
   onSubmitValidated: [],
 }>()
+
+const submitBtnRef = ref<HTMLButtonElement | null>(null)
 
 const displayGroups = computed(
     () => schema.groups.filter(
@@ -36,6 +38,14 @@ function onFormSubmit(se: SubmitEventPromise) {
     }
   })
 }
+
+function callSubmit() {
+  submitBtnRef.value?.click()
+}
+
+defineSlots<{
+  actions: (props: { callSubmit: () => void }) => any
+}>()
 </script>
 
 <template>
@@ -48,7 +58,9 @@ function onFormSubmit(se: SubmitEventPromise) {
           v-model="model"
       />
     </v-expansion-panels>
-    <button type="submit" v-if="!schema.disableHiddenSubmit" style="display: none; position: absolute;"></button>
+    <button type="submit" ref="submitBtnRef" v-if="!schema.disableHiddenSubmit"
+            style="display: none; position: absolute;"></button>
+    <slot name="actions" :callSubmit="callSubmit"></slot>
   </v-form>
 </template>
 

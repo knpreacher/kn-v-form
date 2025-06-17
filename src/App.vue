@@ -243,7 +243,11 @@ function onOpenDialogBtnClick() {
       </v-code>
       <v-divider/>
       <h3>Form</h3>
-      <kn-form-layout :schema="form" v-model="model"/>
+      <kn-form-layout :schema="form" v-model="model">
+        <template #actions>
+          <v-btn type="submit">Submit 123</v-btn>
+        </template>
+      </kn-form-layout>
       <v-divider/>
       <h3>Single field</h3>
       <!--      <kn-form-field-wrapper />-->
