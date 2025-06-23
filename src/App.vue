@@ -1,14 +1,15 @@
 <script setup lang="ts">
 
-import { KnFormLayout, KnFormFieldWrapper, kn, useKnDialog, useKnValidationRules } from './../lib'
+import { KnFormLayout, KnFormFieldWrapper, kn, useKnDialog, useKnValidationRules, apiProvider } from './../lib'
 import { computed, ref } from 'vue'
 import TestCustomInput from './TestCustomInput.vue'
+import CustomDialogComponent from './CustomDialogComponent.vue'
 import { VApp, VContainer, VDivider, VCode, VBtn } from 'vuetify/components'
-import { BaseApiProvider } from '@/web/apiProvider'
+
 
 const rules = useKnValidationRules()
 
-const testApiProvider = new BaseApiProvider({
+const testApiProvider = new apiProvider.BaseApiProvider({
   list: async (query) => {
     let response = await fetch(`http://localhost:3000/items?sleep=200&${new URLSearchParams(query).toString()}`, {
       method: 'GET'
@@ -207,9 +208,9 @@ const model = ref({
 })
 const displayModel = computed(() => JSON.stringify(model.value, null, 2))
 
-const {select} = useKnDialog()
+const {select, custom: customDialog} = useKnDialog()
 
-function onOpenDialogBtnClick() {
+function onOpenSelectDialogBtnClick() {
   select({
     title: 'Select Dialog',
     options: [
@@ -228,6 +229,15 @@ function onOpenDialogBtnClick() {
     ]
   }).then((value) => {
     console.log('resolved', value)
+  })
+}
+
+function onOpenCustomDialogBtnClick() {
+  customDialog({
+    title: 'Custom Dialog',
+    component: CustomDialogComponent
+  }).then((data) => {
+    console.log('resolved', data)
   })
 }
 </script>
@@ -253,7 +263,8 @@ function onOpenDialogBtnClick() {
       <!--      <kn-form-field-wrapper />-->
       <v-divider/>
       <h3>Dialog</h3>
-      <v-btn @click="onOpenDialogBtnClick">Open Dialog</v-btn>
+      <v-btn @click="onOpenSelectDialogBtnClick">Open Select Dialog</v-btn>
+      <v-btn @click="onOpenCustomDialogBtnClick">Open Custom Dialog</v-btn>
     </v-container>
   </v-app>
 </template>

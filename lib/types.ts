@@ -334,6 +334,10 @@ export interface KnCustomDialogData extends KnCommonDialogData {
   componentProps?: Record<string, any>
 }
 
+export interface KnCustomDialogProps extends KnCommonDialogData {
+
+}
+
 export interface KnSelectDialogData extends KnCommonDialogData {
   options: DefaultSelectionOption[]
 }

@@ -9,7 +9,7 @@ import * as apiProvider from './web/apiProvider'
 
 export * from './types'
 import './index.css'
-import { dialogPlugin, useKnDialog } from '@/dialogPlugin'
+import { dialogPlugin, useKnDialog, useKnCustomDialog } from '@/dialogPlugin'
 import { rulesPlugin, useKnValidationRules, createRules } from '@/validation/rulesPlugin'
 
 export {
@@ -27,5 +27,6 @@ export {
   useKnValidationRules,
 
   dialogPlugin,
-  useKnDialog
+  useKnDialog,
+  useKnCustomDialog
 }
