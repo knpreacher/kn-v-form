@@ -181,19 +181,18 @@ function selectMany<ItemOption extends DefaultSelectionOption = DefaultSelection
 }
 
 function apiObjectSelect<
-  ApiProvider extends BaseApiProvider = BaseApiProvider,
-  ItemOption extends DefaultSelectionOption = DefaultSelectionOption
+  ApiProvider extends BaseApiProvider = BaseApiProvider
 >(
   key: string,
   apiProvider: ApiProvider,
-  options?: FieldOptions<Omit<KnFormApiObjectSelectField<ApiProvider, ItemOption>, 'apiProvider'>>
-): KnFormApiObjectSelectField<ApiProvider, ItemOption> {
+  options?: FieldOptions<Omit<KnFormApiObjectSelectField<ApiProvider>, 'apiProvider'>>
+): KnFormApiObjectSelectField<ApiProvider> {
   return {
     ...(options ?? {}),
     apiProvider,
     name: key,
     type: 'api_object_select'
-  } as KnFormApiObjectSelectField<ApiProvider, ItemOption>
+  } as KnFormApiObjectSelectField<ApiProvider>
 }
 
 export {

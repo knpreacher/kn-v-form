@@ -272,11 +272,10 @@ export interface KnFormSelectManyField<
 
 export interface KnFormApiObjectSelectField<
   ApiProvider extends BaseApiProvider = BaseApiProvider,
-  Options extends DefaultSelectionOption = DefaultSelectionOption,
 > extends KnFormAbstractField<
   PreparedInputProps<Omit<VTextField['$props'], 'items' | 'multiple' | 'options'>>,
   GetSlots<VTextField>
->, InputOptions<Options> {
+> {
   apiProvider: ApiProvider,
   emptyText?: string
   objectIdText?: string
