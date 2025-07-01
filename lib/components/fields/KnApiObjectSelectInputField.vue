@@ -89,7 +89,6 @@ watch(debouncedFilterText, () => {
 })
 
 function onLoadMore(options: InfiniteScrollLoadOptions) {
-  console.log(options)
   fieldProps.apiProvider.preparedList({
     limit: 25,
     offset: items.value.length ?? 0,

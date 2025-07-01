@@ -10,6 +10,7 @@ import KnSelectInputField from './KnSelectInputField.vue'
 import KnToggleSelectInputField from './KnToggleSelectInputField.vue'
 import KnSelectManyInputField from './KnSelectManyInputField.vue'
 import KnApiObjectSelectInputField from './KnApiObjectSelectInputField.vue'
+import KnApiObjectSelectManyInputField from './KnApiObjectSelectManyInputField.vue'
 
 export {
   KnComputedInputField,
@@ -23,5 +24,6 @@ export {
   KnSelectInputField,
   KnToggleSelectInputField,
   KnSelectManyInputField,
-  KnApiObjectSelectInputField
+  KnApiObjectSelectInputField,
+  KnApiObjectSelectManyInputField
 }

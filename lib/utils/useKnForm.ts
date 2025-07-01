@@ -20,6 +20,7 @@ import type {
 import { VBtn } from 'vuetify/components'
 import { MaybeRef } from 'vue'
 import type { BaseApiProvider } from '@/web/apiProvider.ts'
+import type { KnFormApiObjectSelectManyField } from '../types.ts'
 
 function form(
   groups: KnFormData['groups'],
@@ -195,6 +196,21 @@ function apiObjectSelect<
   } as KnFormApiObjectSelectField<ApiProvider>
 }
 
+function apiObjectSelectMany<
+  ApiProvider extends BaseApiProvider = BaseApiProvider
+>(
+  key: string,
+  apiProvider: ApiProvider,
+  options?: FieldOptions<Omit<KnFormApiObjectSelectManyField<ApiProvider>, 'apiProvider'>>
+): KnFormApiObjectSelectManyField<ApiProvider> {
+  return {
+    ...(options ?? {}),
+    apiProvider,
+    name: key,
+    type: 'api_object_select_many'
+  } as KnFormApiObjectSelectManyField<ApiProvider>
+}
+
 export {
   form,
   group,
@@ -210,5 +226,6 @@ export {
   select,
   toggleSelect,
   selectMany,
-  apiObjectSelect
+  apiObjectSelect,
+  apiObjectSelectMany
 }

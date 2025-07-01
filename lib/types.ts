@@ -34,6 +34,7 @@ export type FieldDataType =
   | 'checkbox'
   | 'radio'
   | 'api_object_select'
+  | 'api_object_select_many'
 
 type AbstractInputProps = Record<string, any>
 
@@ -283,6 +284,12 @@ export interface KnFormApiObjectSelectField<
   autoFetch?: (value: any) => boolean
 }
 
+export interface KnFormApiObjectSelectManyField<
+  ApiProvider extends BaseApiProvider = BaseApiProvider
+> extends KnFormApiObjectSelectField<ApiProvider> {
+  checkEqual?: (a: any, b: any) => boolean
+}
+
 export type KnFormAnyField =
   KnFormComputedField
   | KnFormCustomField
@@ -295,6 +302,7 @@ export type KnFormAnyField =
   | KnFormToggleSelectField
   | KnFormSelectManyField
   | KnFormApiObjectSelectField
+  | KnFormApiObjectSelectManyField
 
 
 export interface KnFormGroup {

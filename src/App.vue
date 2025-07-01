@@ -193,6 +193,19 @@ const form = kn.form([
               return typeof data === 'string' || typeof data === 'number'
             }
           }
+      ),
+      kn.apiObjectSelectMany(
+          'api_object_select_many',
+          testApiProvider, {
+            label: 'api_object_select_many',
+            checkEqual(a, b) {
+              return a === b || a?.id === b?.id
+            },
+            autoFetch: (data: any) => {
+              if (!Array.isArray(data)) return false
+              return data.every((d) => typeof d === 'string' || typeof d === 'number')
+            }
+          }
       )
     ]
   }
@@ -204,7 +217,8 @@ const form = kn.form([
 
 const model = ref({
   age: 10,
-  api_object_select: 101
+  api_object_select: 101,
+  api_object_select_many: [ 1, 2, 3 ]
 })
 const displayModel = computed(() => JSON.stringify(model.value, null, 2))
 

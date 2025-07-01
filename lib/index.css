@@ -21,3 +21,18 @@
     align-items: center;
     flex-wrap: nowrap;
 }
+
+.kn-api-object-select-many {
+    &.has-selected {
+        .kn-api-object-select-many__selected-items {
+            margin-bottom: 0.5em;
+        }
+    }
+}
+
+.kn-api-object-select-many__selected-items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
