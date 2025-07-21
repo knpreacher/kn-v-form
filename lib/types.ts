@@ -93,6 +93,7 @@ export interface KnFormAbstractField<
   type: FieldDataType
 
   outLabel?: boolean,
+  outLabelTooltip?: boolean | ((label?: string) => boolean),
   inlineOutLabel?: VueClassData | boolean
   wrapToggle?: true | Omit<VSwitch['$props'], 'modelValue'>
   untoggledValue?: any

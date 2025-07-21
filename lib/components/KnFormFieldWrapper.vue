@@ -4,8 +4,9 @@ import type { KnFormAnyField } from '@/types'
 
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 
-import { VSpacer } from 'vuetify/components'
+import { VSpacer, VTooltip } from 'vuetify/components'
 import { componentMap } from '@/utils/componentTypeMap'
+import { computed } from 'vue'
 
 const {fieldProps} = defineProps<{
   fieldProps: KnFormAnyField
@@ -16,6 +17,19 @@ const allData = defineModel('allData')
 const bindComponent = componentMap[fieldProps.type]
 
 const fieldSlots = fieldProps.slots ?? {}
+
+const useOutLabelTooltip = computed<boolean>(() => {
+  if (typeof fieldProps.outLabelTooltip === 'undefined') {
+    return false
+  }
+  if (typeof fieldProps.outLabelTooltip === 'boolean') {
+    return fieldProps.outLabelTooltip
+  }
+  if (!!fieldProps.outLabelTooltip?.call) {
+    return fieldProps.outLabelTooltip(fieldProps.label)
+  }
+  return false
+})
 </script>
 
 <template>
@@ -23,13 +37,17 @@ const fieldSlots = fieldProps.slots ?? {}
     <slot-renderer :slot-data="fieldSlots.header" v-if="fieldProps.outLabel">
       <div class="kn-form-field__header">
         <slot-renderer :slot-data="fieldSlots.header_before_label"/>
-        <div class="kn-form-field__label" v-text="fieldProps.label"></div>
+        <v-tooltip :text="fieldProps.label" :disabled="!useOutLabelTooltip" location="center">
+          <template #activator="{props}">
+            <div class="kn-form-field__label" v-bind="props" v-text="fieldProps.label"></div>
+          </template>
+        </v-tooltip>
         <slot-renderer :slot-data="fieldSlots.header_after_label"/>
         <v-spacer/>
         <slot-renderer :slot-data="fieldSlots.header_side"/>
       </div>
     </slot-renderer>
-    <v-spacer v-if="fieldProps.inlineOutLabel" />
+    <v-spacer v-if="fieldProps.inlineOutLabel"/>
     <div class="kn-form-field__inner">
       <component
           :is="bindComponent" :field-props="fieldProps"

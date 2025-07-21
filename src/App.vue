@@ -198,6 +198,7 @@ const form = kn.form([
           'api_object_select_many',
           testApiProvider, {
             label: 'api_object_select_many',
+            outLabelTooltip: (label) => label?.length > 10,
             checkEqual(a, b) {
               return a === b || a?.id === b?.id
             },
