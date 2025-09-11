@@ -6,7 +6,7 @@ import { useKnFormField } from '@/utils/fieldUtils'
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
 import { computed } from 'vue'
 
-import { format, parse, parseISO, formatISO } from 'date-fns'
+import { format, parse } from 'date-fns'
 
 const { fieldProps } = defineProps<{
   fieldProps: KnFormDatetimeField
@@ -135,7 +135,11 @@ function onBlur() {
     <template #prepend-inner>
       <v-btn icon="calendar" flat variant="text">
         <v-menu activator="parent" :close-on-content-click="false">
-          <v-date-picker v-model="dateModel" show-adjacent-months hide-title hide-header>
+          <v-date-picker v-model="dateModel"
+                         show-adjacent-months
+                         hide-title hide-header
+                         :first-day-of-week="1"
+          >
 
           </v-date-picker>
         </v-menu>

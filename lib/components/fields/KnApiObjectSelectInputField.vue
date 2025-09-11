@@ -78,11 +78,11 @@ const debouncedFilterText = debounceRef(filterText, 500, {
 
 const infScrollKey = ref(randString())
 
-watch(debouncedFilterText, (value) => {
+watch(debouncedFilterText, () => {
   items.value = []
-  if (!value) {
-    infScrollKey.value = randString()
-  }
+  // if (!value) {
+  infScrollKey.value = randString()
+  // }
 })
 
 function onLoadMore(options: InfiniteScrollLoadOptions) {
@@ -153,6 +153,7 @@ onMounted(() => {
         variant="filled" v-model="filterText"
         :prepend-inner-icon="fieldProps.filterIcon ?? 'search'"
         :placeholder="fieldProps.filterPlaceholder ?? 'Search'"
+        autofocus autocomplete="off" focused
         hide-details clearable
       />
       <v-infinite-scroll
