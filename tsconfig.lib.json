@@ -2,7 +2,10 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "useDefineForClassFields": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -13,6 +16,8 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "outDir": "./dist",
+    "composite": true,
     //    "types": [
     //      "./src/types.ts"
     //    ],

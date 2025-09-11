@@ -18,6 +18,8 @@ const vuetify = createVuetify({
   defaults: {
     global: {},
     VTextField: componentOptions,
+    VMaskInput: componentOptions,
+    VTextarea: componentOptions,
     VNumberInput: componentOptions,
     VSelect: componentOptions
   }

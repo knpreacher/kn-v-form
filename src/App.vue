@@ -99,10 +99,16 @@ const form = kn.form([
         }
       }),
       kn.int('age', {
+        defaultValue: 15,
         label: 'AGE'
       }),
+      kn.string('masked', {
+        label: 'Masked',
+        mask: '+# (###) ###-####'
+      }),
       kn.float('weight', {
-        label: 'WEIGHT'
+        label: 'WEIGHT',
+        defaultValue: 50
       }),
       kn.float('weight2', {
         label: 'WEIGHT2',
@@ -123,9 +129,19 @@ const form = kn.form([
       ], {
         label: 'SELECT'
       }),
+      kn.boolSwitch('bool_toggle', {
+        label: 'Switch -> bool toggle',
+        inlineOutLabel: true,
+        inputProps: {
+          color: 'primary'
+        }
+      }),
       kn.boolToggle('bool_toggle', {
         text: 'Yes'
-      }, {text: 'No'}),
+      }, {text: 'No'}, {
+        label: 'BOOL TOGGLE lorem ipsum dolor sit amet consectetur adipiscing elit',
+        inlineOutLabel: true,
+      }),
       kn.toggleSelect('toggle_select', [
         {
           value: 4,
@@ -152,6 +168,9 @@ const form = kn.form([
           // color: 'primary',
           activeColor: 'green'
         }
+      }),
+      kn.text('text', {
+
       }),
       kn.gridSelect('grid_select', computedOptions, {
         label: 'grid_SELECT',

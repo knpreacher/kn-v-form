@@ -1,8 +1,10 @@
 import KnComputedInputField from './KnComputedInputField.vue'
 import KnCustomInputField from './KnCustomInputField.vue'
 import KnBoolToggleInputField from './KnBoolToggleInputField.vue'
+import KnSwitchInputField from './KnSwitchInputField.vue'
 import KnGridSelectInputField from './KnGridSelectInputField.vue'
 import KnStringInputField from './KnStringInputField.vue'
+import KnTextInputField from './KnTextInputField.vue'
 import KnPasswordInputField from './KnPasswordInputField.vue'
 import KnIntInputField from './KnIntInputField.vue'
 import KnFloatInputField from './KnFloatInputField.vue'
@@ -16,8 +18,10 @@ export {
   KnComputedInputField,
   KnCustomInputField,
   KnGridSelectInputField,
+  KnSwitchInputField,
   KnBoolToggleInputField,
   KnStringInputField,
+  KnTextInputField,
   KnPasswordInputField,
   KnIntInputField,
   KnFloatInputField,

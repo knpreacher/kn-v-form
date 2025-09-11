@@ -15,12 +15,14 @@ import type {
   KnFormSelectField,
   KnFormSelectManyField,
   KnFormStringField,
-  KnFormToggleSelectField
+  KnFormToggleSelectField,
+  KnFormApiObjectSelectManyField,
+  KnFormSwitchField,
+  KnFormTextField
 } from '@/types'
 import { VBtn } from 'vuetify/components'
 import { MaybeRef } from 'vue'
 import type { BaseApiProvider } from '@/web/apiProvider.ts'
-import type { KnFormApiObjectSelectManyField } from '../types.ts'
 
 function form(
   groups: KnFormData['groups'],
@@ -70,6 +72,17 @@ function custom(
   } as KnFormCustomField
 }
 
+function boolSwitch(
+  key: string,
+  options?: FieldOptions<KnFormSwitchField>
+): KnFormSwitchField {
+  return {
+    ...(options ?? {}),
+    name: key,
+    type: 'switch'
+  } as KnFormSwitchField
+}
+
 function boolToggle(
   key: string,
   positiveBtn: string | VBtn['$props'],
@@ -107,6 +120,17 @@ function string(
     name: key,
     type: 'string'
   } as KnFormStringField
+}
+
+function text(
+  key: string,
+  options?: FieldOptions<KnFormTextField>
+): KnFormTextField {
+  return {
+    ...(options ?? {}),
+    name: key,
+    type: 'text'
+  } as KnFormTextField
 }
 
 function password(
@@ -218,8 +242,10 @@ export {
   computed,
   custom,
   boolToggle,
+  boolSwitch,
   gridSelect,
   string,
+  text,
   password,
   int,
   float,

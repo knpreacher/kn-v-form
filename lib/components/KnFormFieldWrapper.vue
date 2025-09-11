@@ -8,10 +8,13 @@ import { VSpacer, VTooltip } from 'vuetify/components'
 import { componentMap } from '@/utils/componentTypeMap'
 import { computed } from 'vue'
 
-const {fieldProps} = defineProps<{
+const { fieldProps } = defineProps<{
   fieldProps: KnFormAnyField
 }>()
-const model = defineModel<DataType>({required: true})
+const model = defineModel<DataType>({ required: true })
+if (typeof model.value === 'undefined') {
+  model.value = fieldProps.defaultValue
+}
 const allData = defineModel('allData')
 
 const bindComponent = componentMap[fieldProps.type]
@@ -36,27 +39,27 @@ const useOutLabelTooltip = computed<boolean>(() => {
   <div class="kn-form-field__wrapper" :class="{'kn-form-field__wrapper_inline': fieldProps.inlineOutLabel}">
     <slot-renderer :slot-data="fieldSlots.header" v-if="fieldProps.outLabel">
       <div class="kn-form-field__header">
-        <slot-renderer :slot-data="fieldSlots.header_before_label"/>
+        <slot-renderer :slot-data="fieldSlots.header_before_label" />
         <v-tooltip :text="fieldProps.label" :disabled="!useOutLabelTooltip" location="center">
           <template #activator="{props}">
             <div class="kn-form-field__label" v-bind="props" v-text="fieldProps.label"></div>
           </template>
         </v-tooltip>
-        <slot-renderer :slot-data="fieldSlots.header_after_label"/>
-        <v-spacer/>
-        <slot-renderer :slot-data="fieldSlots.header_side"/>
+        <slot-renderer :slot-data="fieldSlots.header_after_label" />
+        <v-spacer />
+        <slot-renderer :slot-data="fieldSlots.header_side" />
       </div>
     </slot-renderer>
-    <v-spacer v-if="fieldProps.inlineOutLabel"/>
+    <v-spacer v-if="fieldProps.inlineOutLabel" />
     <div class="kn-form-field__inner">
       <component
-          :is="bindComponent" :field-props="fieldProps"
-          v-model="model" v-model:all-data="allData"
-          v-if="bindComponent"
+        :is="bindComponent" :field-props="fieldProps"
+        v-model="model" v-model:all-data="allData"
+        v-if="bindComponent"
       />
       <div v-else>Unknown field type {{ fieldProps.type }}</div>
     </div>
-    <slot-renderer :slot-data="fieldSlots.footer">
+    <slot-renderer :slot-data="fieldSlots.footer" v-if="fieldSlots.footer">
       <div class="kn-form-field__footer"></div>
     </slot-renderer>
   </div>

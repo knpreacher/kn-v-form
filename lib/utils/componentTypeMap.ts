@@ -3,10 +3,12 @@ import * as fields from '@/components/fields'
 export const componentMap = Object.freeze<Partial<Record<FieldDataType, any>>>({
   computed: fields.KnComputedInputField,
   custom: fields.KnCustomInputField,
+  switch: fields.KnSwitchInputField,
   bool_toggle: fields.KnBoolToggleInputField,
   boolean: fields.KnBoolToggleInputField,
   grid_select: fields.KnGridSelectInputField,
   string: fields.KnStringInputField,
+  text: fields.KnTextInputField,
   password: fields.KnPasswordInputField,
   int: fields.KnIntInputField,
   float: fields.KnFloatInputField,

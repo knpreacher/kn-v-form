@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { VTextField } from 'vuetify/components'
+import { VMaskInput } from 'vuetify/labs/VMaskInput'
 import type { KnFormStringField } from '@/types'
 import { useKnFormField } from '@/utils/fieldUtils'
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
@@ -14,10 +15,19 @@ const {model, inputProps, label, inputSlots} = useKnFormField(
     [ 'append-inner', 'prepend-inner' ]
 )
 
+const isMaskUsed = !!fieldProps.mask
+
+const bindComponent = isMaskUsed ? VMaskInput : VTextField
+
+const bindProps = {
+  ...inputProps,
+  mask: fieldProps.mask
+}
+
 </script>
 
 <template>
-  <v-text-field v-model="model" v-bind="inputProps as any" :label="label">
+  <component :is="bindComponent" v-model="model" v-bind="bindProps as any" :label="label">
     <template
         v-for="[slotName, s] in inputSlots"
         :key="slotName" #[slotName]
@@ -27,7 +37,7 @@ const {model, inputProps, label, inputSlots} = useKnFormField(
           v-model="model"
       />
     </template>
-  </v-text-field>
+  </component>
 </template>
 
 <style scoped>

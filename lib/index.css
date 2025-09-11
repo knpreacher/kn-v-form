@@ -9,6 +9,7 @@
     opacity: 0.8;
     font-size: 0.8em;
     font-weight: bold;
+    text-wrap: auto;
 }
 
 .kn-form-field-group {
@@ -19,7 +20,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    /*justify-content: space-around;*/
     flex-wrap: nowrap;
+}
+
+.kn-form-field__wrapper_inline .kn-form-field__header {
+    flex-shrink: 1;
+    max-width: 50%;
 }
 
 .kn-api-object-select-many {
@@ -35,4 +42,9 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 0.5em;
+}
+
+.kn-form-field__inner {
+    flex-grow: 0;
+    /*width: 70%;*/
 }

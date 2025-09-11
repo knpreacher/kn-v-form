@@ -23,11 +23,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./lib', import.meta.url))
     }
   },
-  // optimizeDeps: {
-  //   include: ["vuetify"],
-  // },
   build: {
     outDir: 'dist',
+    copyPublicDir: false,
     sourcemap: true,
     lib: {
       // src/main.ts is where we have exported our component(s)
@@ -50,6 +48,10 @@ export default defineConfig({
         }
       }
     }
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 5173
   }
   // ssr: {
   //   noExternal: [ /\.css$/, /^vuetify/ ]

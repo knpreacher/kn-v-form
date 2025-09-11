@@ -8,7 +8,7 @@ import type {
   VInput,
   VDialog,
   VBtn,
-  VForm, VBtnToggle, VBtnGroup, VCard
+  VForm, VBtnToggle, VBtnGroup, VCard, VTextarea
 } from 'vuetify/components'
 import type { ValidationRule } from 'vuetify/framework'
 import { MaybeRef } from 'vue'
@@ -19,8 +19,10 @@ export type FieldDataType =
   | 'empty'
   | 'custom'
   | 'bool_toggle'
+  | 'switch'
   | 'grid_select'
   | 'string'
+  | 'text'
   | 'password'
   | 'int'
   | 'float'
@@ -98,6 +100,8 @@ export interface KnFormAbstractField<
   wrapToggle?: true | Omit<VSwitch['$props'], 'modelValue'>
   untoggledValue?: any
 
+  defaultValue?: any
+
   gridSize?: GridSize
 
   rules?: ValidationRules
@@ -159,6 +163,16 @@ export interface KnFormCustomField extends KnFormAbstractField<
 }
 
 //
+// Switch Field
+//
+export interface KnFormSwitchField extends KnFormAbstractField<
+  PreparedInputProps<VSwitch>,
+  GetSlots<VSwitch>
+> {
+
+}
+
+//
 // Bool toggle Field
 //
 export interface KnFormBoolToggleField extends KnFormAbstractField<
@@ -191,6 +205,16 @@ export interface KnFormGridSelectField<
 export interface KnFormStringField extends KnFormAbstractField<
   PreparedInputProps<VTextField>,
   GetSlots<VTextField>
+> {
+  mask?: string
+}
+
+//
+// Text Field
+//
+export interface KnFormTextField extends KnFormAbstractField<
+  PreparedInputProps<VTextarea>,
+  GetSlots<VTextarea>
 > {
 }
 
@@ -294,9 +318,11 @@ export interface KnFormApiObjectSelectManyField<
 export type KnFormAnyField =
   KnFormComputedField
   | KnFormCustomField
+  | KnFormSwitchField
   | KnFormBoolToggleField
   | KnFormGridSelectField
   | KnFormStringField
+  | KnFormTextField
   | KnFormIntField
   | KnFormFloatField
   | KnFormSelectField
