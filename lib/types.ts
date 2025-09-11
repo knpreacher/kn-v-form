@@ -10,6 +10,10 @@ import type {
   VBtn,
   VForm, VBtnToggle, VBtnGroup, VCard, VTextarea
 } from 'vuetify/components'
+
+import type { VDateInput } from 'vuetify/labs/VDateInput'
+import type { VMaskInput } from 'vuetify/labs/VMaskInput'
+
 import type { ValidationRule } from 'vuetify/framework'
 import { MaybeRef } from 'vue'
 import type { BaseApiProvider } from '@/web/apiProvider.ts'
@@ -200,6 +204,38 @@ export interface KnFormGridSelectField<
 }
 
 //
+// Date Field
+//
+export interface KnFormDateField extends KnFormAbstractField<
+  PreparedInputProps<VDateInput>,
+  GetSlots<VDateInput>
+> {
+  valueType?: 'date' | 'timestamp' | 'string',
+  format?: string
+}
+
+//
+// Datetime Field
+//
+export interface KnFormDatetimeField extends KnFormAbstractField<
+  PreparedInputProps<VMaskInput>,
+  GetSlots<VMaskInput>
+> {
+  valueType?: 'date' | 'timestamp' | 'string' | 'iso',
+  format?: string
+}
+
+//
+// Time Field
+//
+export interface KnFormTimeField extends KnFormAbstractField<
+  PreparedInputProps<VMaskInput>,
+  GetSlots<VDateInput>
+> {
+  seconds?: boolean
+}
+
+//
 // String Field
 //
 export interface KnFormStringField extends KnFormAbstractField<
@@ -323,6 +359,9 @@ export type KnFormAnyField =
   | KnFormSwitchField
   | KnFormBoolToggleField
   | KnFormGridSelectField
+  | KnFormDateField
+  | KnFormDatetimeField
+  | KnFormTimeField
   | KnFormStringField
   | KnFormTextField
   | KnFormIntField

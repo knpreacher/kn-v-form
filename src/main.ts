@@ -6,7 +6,7 @@ import 'vuetify/styles/main.css'
 import App from './App.vue'
 
 import './../lib/index.css'
-import { dialogPlugin, rulesPlugin } from '../lib'
+import { dialogPlugin, rulesPlugin,DateFnsAdapter } from '../lib'
 // import './../lib/kn-style.css'
 
 const componentOptions = {
@@ -15,8 +15,12 @@ const componentOptions = {
 }
 
 const vuetify = createVuetify({
+  // date: {
+  //   adapter: DateFnsAdapter
+  // },
   defaults: {
     global: {},
+    VDateInput: componentOptions,
     VTextField: componentOptions,
     VMaskInput: componentOptions,
     VTextarea: componentOptions,

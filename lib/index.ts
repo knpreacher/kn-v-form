@@ -2,7 +2,8 @@ import { KnFormLayout, KnFormFieldWrapper, fields } from './components'
 import SlotRenderer from './components/helpers/SlotRenderer.vue'
 import Pass from './components/helpers/Pass.vue'
 import * as kn from './utils/useKnForm'
-
+import DateFnsAdapter from '@date-io/date-fns'
+import * as dateFns from 'date-fns'
 import * as jsUtils from './utils/jsUtils'
 
 import * as apiProvider from './web/apiProvider'
@@ -28,5 +29,7 @@ export {
 
   dialogPlugin,
   useKnDialog,
-  useKnCustomDialog
+  useKnCustomDialog,
+  DateFnsAdapter,
+  dateFns
 }

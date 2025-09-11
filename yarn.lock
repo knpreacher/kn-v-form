@@ -32,6 +32,18 @@
   resolved "https://registry.yarnpkg.com/@bufbuild/protobuf/-/protobuf-2.2.5.tgz#8e82c0af292113b4a89f8b658c71c4636c8d2e36"
   integrity sha512-/g5EzJifw5GF8aren8wZ/G5oMuPoGeS6MQD3ca8ddcvdXR5UELUfdTZITCGNhNXynY/AYl3Z4plmxdj/tRl/hQ==
 
+"@date-io/core@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@date-io/core/-/core-3.2.0.tgz#7c8985ac26ccacf4f1b1fec10e2e22c75a28288a"
+  integrity sha512-hqwXvY8/YBsT9RwQITG868ZNb1MVFFkF7W1Ecv4P472j/ZWa7EFcgSmxy8PUElNVZfvhdvfv+a8j6NWJqOX5mA==
+
+"@date-io/date-fns@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@date-io/date-fns/-/date-fns-3.2.1.tgz#907aa974c150b3f2d2d79b0f6e18b0fe64c7f051"
+  integrity sha512-CtXgTOAamkImI+CmbWRNdBi4ljj9xm/tdoPa+eeeiygduzubJTsXp18vYz+Vs/9yLho1zUOXlxpsfsF7PsXSWQ==
+  dependencies:
+    "@date-io/core" "^3.2.0"
+
 "@esbuild/aix-ppc64@0.25.3":
   version "0.25.3"
   resolved "https://registry.yarnpkg.com/@esbuild/aix-ppc64/-/aix-ppc64-0.25.3.tgz#014180d9a149cffd95aaeead37179433f5ea5437"
@@ -727,6 +739,11 @@ csstype@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.3.tgz#d80ff294d114fb0e6ac500fbf85b60137d7eff81"
   integrity sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==
+
+date-fns@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-4.1.0.tgz#64b3d83fff5aa80438f5b1a633c2e83b8a1c2d14"
+  integrity sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==
 
 de-indent@^1.0.2:
   version "1.0.2"

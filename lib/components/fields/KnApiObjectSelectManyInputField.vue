@@ -143,7 +143,6 @@ function itemAsOption(item: T) {
 
 onMounted(() => {
   if (!needAutoFetch()) return
-  console.log('onMounted', model.value)
   modelFetchLoading.value = true
   if (!model.value?.length) return
   Promise.all(

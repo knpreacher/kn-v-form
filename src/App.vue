@@ -102,6 +102,20 @@ const form = kn.form([
         defaultValue: 15,
         label: 'AGE'
       }),
+      kn.date('date_f', {
+        label: 'date',
+        // format: 'dd.MM.yyyy',
+        // valueType: 'string'
+      }),
+      kn.time('time_f', {
+        label: 'time',
+        seconds: true
+      }),
+      kn.datetime('datetime_f', {
+        label: 'datetime',
+        format: 'dd.MM.yyyy HH:mm',
+        valueType: 'iso'
+      }),
       kn.string('masked', {
         label: 'Masked',
         mask: '+# (###) ###-####'
@@ -238,6 +252,7 @@ const form = kn.form([
 
 const model = ref({
   age: 10,
+  date_f: '12/12/2003',
   api_object_select: 101,
   api_object_select_many: [ 1, 2, 3 ]
 })

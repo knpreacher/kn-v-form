@@ -18,6 +18,9 @@ import type {
   KnFormToggleSelectField,
   KnFormApiObjectSelectManyField,
   KnFormSwitchField,
+  KnFormDateField,
+  KnFormDatetimeField,
+  KnFormTimeField,
   KnFormTextField
 } from '@/types'
 import { VBtn } from 'vuetify/components'
@@ -109,6 +112,39 @@ function gridSelect<ItemOption extends DefaultSelectionOption = DefaultSelection
     name: key,
     type: 'grid_select'
   } as KnFormGridSelectField
+}
+
+function date(
+  key: string,
+  options?: FieldOptions<KnFormDateField>
+): KnFormDateField {
+  return {
+    ...(options ?? {}),
+    name: key,
+    type: 'date'
+  } as KnFormDateField
+}
+
+function datetime(
+  key: string,
+  options?: FieldOptions<KnFormDatetimeField>
+): KnFormDatetimeField {
+  return {
+    ...(options ?? {}),
+    name: key,
+    type: 'datetime'
+  } as KnFormDatetimeField
+}
+
+function time(
+  key: string,
+  options?: FieldOptions<KnFormTimeField>
+): KnFormTimeField {
+  return {
+    ...(options ?? {}),
+    name: key,
+    type: 'time'
+  } as KnFormTimeField
 }
 
 function string(
@@ -244,6 +280,9 @@ export {
   boolToggle,
   boolSwitch,
   gridSelect,
+  date,
+  datetime,
+  time,
   string,
   text,
   password,
