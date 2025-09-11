@@ -302,7 +302,9 @@ export interface KnFormApiObjectSelectField<
   PreparedInputProps<Omit<VTextField['$props'], 'items' | 'multiple' | 'options'>>,
   GetSlots<VTextField>
 > {
-  apiProvider: ApiProvider,
+  apiProvider: ApiProvider
+  filterPlaceholder?: string
+  filterIcon?: string
   emptyText?: string
   objectIdText?: string
   returnObject?: boolean

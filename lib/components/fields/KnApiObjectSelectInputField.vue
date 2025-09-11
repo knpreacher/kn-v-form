@@ -9,7 +9,7 @@ import { debounceRef } from '@/utils/vueUtils.ts'
 import { randString } from '@/utils/jsUtils.ts'
 import Pass from '@/components/helpers/Pass.vue'
 
-const {fieldProps} = defineProps<{
+const { fieldProps } = defineProps<{
   fieldProps: KnFormApiObjectSelectField
 }>()
 
@@ -20,22 +20,25 @@ interface InfiniteScrollLoadOptions {
 
 const _model = defineModel<T>()
 
-const {model, inputProps, label, inputSlots} = useKnFormField(
-    _model,
-    fieldProps,
-    [ 'append-inner', 'prepend-inner' ]
+const { model, inputProps, label, inputSlots } = useKnFormField(
+  _model,
+  fieldProps,
+  [ 'append-inner', 'prepend-inner' ]
 )
 
 const selectedItem = ref<T | null>(null)
 
-const needFilter = ref(true)
+const displayValue = computed(() => {
+  if (!selectedItem.value) return ''
+  return getItemLabel(selectedItem.value)
+})
 
 function setSelected(item: T | null) {
   selectedItem.value = item
   if (!item) return
   menuVisible.value = false
-  filterText.value = getItemLabel(item)
-  needFilter.value = false
+  // filterText.value = getItemLabel(item)
+  // needFilter.value = false
 }
 
 watch(selectedItem, value => {
@@ -75,16 +78,10 @@ const debouncedFilterText = debounceRef(filterText, 500, {
 
 const infScrollKey = ref(randString())
 
-watch(debouncedFilterText, () => {
+watch(debouncedFilterText, (value) => {
   items.value = []
-  if (needFilter.value) {
-    if (!menuVisible.value) {
-      menuVisible.value = true
-    }
+  if (!value) {
     infScrollKey.value = randString()
-  } else {
-    menuVisible.value = false
-    needFilter.value = true
   }
 })
 
@@ -103,20 +100,6 @@ function onLoadMore(options: InfiniteScrollLoadOptions) {
   })
 }
 
-
-function onInputBlur() {
-  needFilter.value = false
-  if (selectedItem.value) {
-    if (!filterText.value) {
-      selectedItem.value = null
-    } else {
-      filterText.value = getItemLabel(selectedItem.value)
-    }
-  } else {
-    filterText.value = ''
-  }
-}
-
 function itemAsOption(item: T) {
   return fieldProps.apiProvider.itemAsOption(item)
 }
@@ -127,8 +110,12 @@ onMounted(() => {
   fieldProps.apiProvider.retrieveObject(model.value).then(res => {
     setSelected(res)
   }).catch(() => {
-    needFilter.value = false
-    filterText.value = `${fieldProps.objectIdText ?? 'Object'} [${model.value}]`
+    filterText.value = ''
+    model.value = undefined
+    // selectedItem.value = {
+    //   value: null,
+    //   label: '????'
+    // }
   }).finally(() => {
     modelFetchLoading.value = false
   })
@@ -138,48 +125,54 @@ onMounted(() => {
 
 <template>
   <v-menu
-      :close-on-content-click="false" v-model="menuVisible"
-      contained
+    :offset="[8, 0]"
+    :close-on-content-click="false" v-model="menuVisible"
+    contained
   >
     <template v-slot:activator="{ props }">
       <v-text-field
-          autocomplete="off"
-          :loading="modelFetchLoading"
-          :readonly="modelFetchLoading"
-          @blur="onInputBlur"
-          v-bind="{...props, ...inputProps} as any" :label="label"
-          v-model="filterText"
+        autocomplete="off"
+        :loading="modelFetchLoading"
+        v-bind="{...props, ...inputProps} as any"
+        :label="label" readonly
+        :model-value="displayValue"
       >
         <template
-            v-for="[slotName, s] in inputSlots"
-            :key="slotName" #[slotName]
+          v-for="[slotName, s] in inputSlots"
+          :key="slotName" #[slotName]
         >
           <slot-renderer
-              :slot-data="s"
-              v-model="model"
+            :slot-data="s"
+            v-model="model"
           />
         </template>
       </v-text-field>
     </template>
     <v-card>
+      <v-text-field
+        variant="filled" v-model="filterText"
+        :prepend-inner-icon="fieldProps.filterIcon ?? 'search'"
+        :placeholder="fieldProps.filterPlaceholder ?? 'Search'"
+        hide-details clearable
+      />
       <v-infinite-scroll
-          :key="infScrollKey"
-          ref="infScrollRef" max-height="250"
-          min-height="64" @load="onLoadMore"
+        :key="infScrollKey"
+        ref="infScrollRef" max-height="250"
+        min-height="64" @load="onLoadMore"
       >
         <template v-for="item in items" :key="item.value">
           <pass
-              :bind-props="{selected: item === selectedItem, option: itemAsOption(item as T)}"
-              #default="{option, selected}"
+            :bind-props="{selected: item === selectedItem, option: itemAsOption(item as T)}"
+            #default="{option, selected}"
           >
             <div>
               <v-list-item
-                  :active="selected"
-                  :value="option.value"
-                  :title="option.label"
-                  :prepend-icon="option.leftIcon?.icon"
-                  :append-icon="option.rightIcon?.icon"
-                  @click="setSelected(item as T)"
+                :active="selected"
+                :value="option.value"
+                :title="option.label"
+                :prepend-icon="option.leftIcon?.icon"
+                :append-icon="option.rightIcon?.icon"
+                @click="setSelected(item as T)"
               />
             </div>
           </pass>

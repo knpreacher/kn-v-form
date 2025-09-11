@@ -208,6 +208,7 @@ const form = kn.form([
       kn.apiObjectSelect(
           'api_object_select',
           testApiProvider, {
+            label: 'api_object_select',
             autoFetch: (data: any) => {
               return typeof data === 'string' || typeof data === 'number'
             }
