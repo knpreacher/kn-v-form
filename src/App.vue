@@ -4,7 +4,7 @@ import { KnFormLayout, KnFormFieldWrapper, kn, useKnDialog, useKnValidationRules
 import { computed, ref } from 'vue'
 import TestCustomInput from './TestCustomInput.vue'
 import CustomDialogComponent from './CustomDialogComponent.vue'
-import { VApp, VContainer, VDivider, VCode, VBtn } from 'vuetify/components'
+import { VApp, VContainer, VDivider, VCode, VBtn, VNumberInput } from 'vuetify/components'
 
 
 const rules = useKnValidationRules()
@@ -290,6 +290,8 @@ function onOpenCustomDialogBtnClick() {
     console.log('resolved', data)
   })
 }
+
+const testData = ref(undefined)
 </script>
 
 <template>
@@ -301,6 +303,11 @@ function onOpenCustomDialogBtnClick() {
       <v-code>
         <pre v-text="displayModel"></pre>
       </v-code>
+      <v-divider/>
+      <h3>TEST</h3>
+      <div>
+        <v-number-input v-model="testData" />
+      </div>
       <v-divider/>
       <h3>Form</h3>
       <kn-form-layout :schema="form" v-model="model">

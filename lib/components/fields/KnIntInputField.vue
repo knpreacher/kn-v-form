@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VNumberInput } from 'vuetify/components'
+import { VTextField } from 'vuetify/components'
 import type { KnFormStringField } from '@/types'
 import { useKnFormField } from '@/utils/fieldUtils'
 import SlotRenderer from '@/components/helpers/SlotRenderer.vue'
@@ -27,17 +27,25 @@ const numberModel = computed({
     return n
   },
   set(value) {
-    model.value = value
+    if (!value) {
+      model.value = undefined
+      return
+    }
+    const _v = Number(value)
+    if (Number.isInteger(_v)) {
+      model.value = _v
+    } else {
+      model.value = Math.round(_v)
+    }
   }
 })
 
 </script>
 
 <template>
-  <v-number-input
+  <v-text-field
     v-model="numberModel" v-bind="inputProps as any"
-    :label="label" :precision="0"
-    control-variant="hidden"
+    :label="label" type="number" hide-spin-buttons
   >
     <template
       v-for="[slotName, s] in inputSlots"
@@ -48,7 +56,7 @@ const numberModel = computed({
         v-model="model"
       />
     </template>
-  </v-number-input>
+  </v-text-field>
 </template>
 
 <style scoped>
