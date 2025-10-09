@@ -1,5 +1,5 @@
 import type { Plugin } from 'vue'
-import { KnCustomDialogData, type KnCustomDialogProps, KnSelectDialogData } from '@/types.ts'
+import { KnCustomDialogData, type KnCustomDialogProps, KnSelectDialogData, KnSubmitDialogData } from '@/types.ts'
 import { mount } from '@/utils/vueUtils.ts'
 import { dialogs } from '@/components'
 import { inject, render } from 'vue'
@@ -49,14 +49,35 @@ export const dialogPlugin: Plugin = {
       })
     }
 
+    function mountSubmitDialog<Pos = boolean, Neg = boolean, Neutral = unknown>(props: Omit<KnSubmitDialogData<Pos, Neg, Neutral>, 'resolve'>) {
+      return new Promise<Pos | Neg | Neutral>(async (resolve) => {
+        const value = await new Promise<Pos | Neg | Neutral>((_resolve) => {
+          mount(
+            dialogs.KnSubmitDialog,
+            {
+              resolve: _resolve,
+              ...props
+            },
+            app
+          )
+        })
+        setTimeout(() => {
+          render(null, app._container.firstElementChild)
+          resolve(value)
+        }, 100)
+      })
+    }
+
     app.provide(dialogInjectKey, {
       select: mountSelectDialog,
-      custom: mountCustomDialog
+      custom: mountCustomDialog,
+      submit: mountSubmitDialog
     })
 
     app.config.globalProperties.$knDialog = {
       select: mountSelectDialog,
-      custom: mountCustomDialog
+      custom: mountCustomDialog,
+      submit: mountSubmitDialog
     }
   }
 }
@@ -67,10 +88,12 @@ export function useKnDialog() {
     throw new Error('Missing dialogs instance')
   const select = dialogs.select as DialogMountFunction<KnSelectDialogData>
   const custom = dialogs.custom as DialogMountFunction<KnCustomDialogData>
+  const submit = dialogs.submit as DialogMountFunction<KnSubmitDialogData>
 
   return {
     select,
-    custom
+    custom,
+    submit
   }
 }
 

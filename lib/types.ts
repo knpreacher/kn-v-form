@@ -12,6 +12,7 @@ import type {
 } from 'vuetify/components'
 
 import type { VDateInput } from 'vuetify/labs/VDateInput'
+// @ts-ignore
 import type { VMaskInput } from 'vuetify/labs/VMaskInput'
 
 import type { ValidationRule } from 'vuetify/framework'
@@ -219,6 +220,7 @@ export interface KnFormDateField extends KnFormAbstractField<
 //
 export interface KnFormDatetimeField extends KnFormAbstractField<
   PreparedInputProps<VMaskInput>,
+  // @ts-ignore
   GetSlots<VMaskInput>
 > {
   valueType?: 'date' | 'timestamp' | 'string' | 'iso',
@@ -411,6 +413,20 @@ export interface KnCustomDialogData extends KnCommonDialogData {
 
 export interface KnCustomDialogProps extends KnCommonDialogData {
 
+}
+
+export interface KnSubmitDialogData<
+  PositiveResult = any,
+  NegativeResult = any,
+  NeutralResult = any
+> extends KnCommonDialogData {
+  positiveValue?: PositiveResult
+  negativeValue?: NegativeResult
+  neutralValue?: NeutralResult
+  body?: string | any
+  positiveBtn?: string | VBtn['$props']
+  negativeBtn?: string | VBtn['$props']
+  neutralBtn?: string | VBtn['$props']
 }
 
 export interface KnSelectDialogData extends KnCommonDialogData {

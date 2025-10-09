@@ -258,7 +258,7 @@ const model = ref({
 })
 const displayModel = computed(() => JSON.stringify(model.value, null, 2))
 
-const {select, custom: customDialog} = useKnDialog()
+const {select, custom: customDialog, submit: submitDialog} = useKnDialog()
 
 function onOpenSelectDialogBtnClick() {
   select({
@@ -288,6 +288,29 @@ function onOpenCustomDialogBtnClick() {
     component: CustomDialogComponent
   }).then((data) => {
     console.log('resolved', data)
+  })
+}
+
+function onOpenSubmitDialogBtnClick() {
+  submitDialog({
+    title: 'Submit Dialog',
+    positiveBtn: {
+      text: 'Yep!',
+      color: 'primary'
+    },
+    negativeBtn: {
+      text: 'Nope'
+    },
+    neutralBtn: {
+      text: 'Cancel ?...'
+    },
+    body: 'Are you sure?',
+    positiveValue: 'LOL',
+    negativeValue: 'WTF',
+    neutralValue: 'MEOW'
+
+  }).then((data) => {
+    console.log('resolved submit dialog', data)
   })
 }
 
@@ -322,6 +345,7 @@ const testData = ref(undefined)
       <h3>Dialog</h3>
       <v-btn @click="onOpenSelectDialogBtnClick">Open Select Dialog</v-btn>
       <v-btn @click="onOpenCustomDialogBtnClick">Open Custom Dialog</v-btn>
+      <v-btn @click="onOpenSubmitDialogBtnClick">Open Submit Dialog</v-btn>
     </v-container>
   </v-app>
 </template>
